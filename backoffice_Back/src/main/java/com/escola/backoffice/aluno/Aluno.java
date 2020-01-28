@@ -1,6 +1,6 @@
 package com.escola.backoffice.aluno;
 
-import com.escola.backoffice.boletin.Boletin;
+import com.escola.backoffice.boletin.Boletim;
 import com.escola.backoffice.professor.Professor;
 import com.escola.backoffice.turma.Turma;
 import com.escola.backoffice.util.Turno;
@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -35,10 +33,10 @@ public class Aluno {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "aluno_professor", joinColumns = @JoinColumn(name = "id_aluno", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_professor", referencedColumnName = "id"))
-    private Set<Professor> professores = new HashSet<>();
+    private List<Professor> professores = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "id_turma", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_turma", referencedColumnName = "id")
     private Turma turma;
 
 
@@ -47,7 +45,7 @@ public class Aluno {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Boletin> boletin = new ArrayList<>();
+    private List<Boletim> boletins = new ArrayList<>();
 
 
 
