@@ -1,9 +1,7 @@
 package com.escola.backoffice.aluno;
 
 import com.escola.backoffice.boletin.Boletim;
-import com.escola.backoffice.professor.Professor;
 import com.escola.backoffice.turma.Turma;
-import com.escola.backoffice.util.Turno;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,14 +25,6 @@ public class Aluno {
     @Column(name = "nome")
     private String nome;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "turno")
-    private Turno turno;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "aluno_professor", joinColumns = @JoinColumn(name = "id_aluno", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_professor", referencedColumnName = "id"))
-    private List<Professor> professores = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_turma", referencedColumnName = "id")
     private Turma turma;
@@ -45,9 +35,23 @@ public class Aluno {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Boletim> boletins = new ArrayList<>();
+    private List<Boletim> boletins = generateBoletins();
 
+    public Aluno(Long id, String nome, Turma turma) {
+        this.id = id;
+        this.nome = nome;
+        this.turma = turma;
+    }
 
+    private List<Boletim> generateBoletins() {
+        List<Boletim> boletimList = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            Boletim b = new Boletim();
+            b.setAluno(this);
+            boletimList.add(b);
+        }
+        return boletimList;
+    }
 
 
 }

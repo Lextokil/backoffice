@@ -21,7 +21,12 @@ public class TurmaService {
     public TurmaDTO save(TurmaDTO turmaDTO) {
         LOGGER.info("Salvando Turma");
         LOGGER.debug("Turma: {}", turmaDTO);
-        Turma turmaSave = new Turma();
+        Turma turmaSave = new Turma(
+                turmaDTO.getId(),
+                turmaDTO.getTurno(),
+                this.iAlunoRepository.findAllAlunosByIds(turmaDTO.getAlunos()),
+                this.iProfessoreRepository.findAllProfessorByIds(turmaDTO.getProfessores())
+        );
 
         turmaSave = this.iTurmaRepository.save(turmaSave);
         return TurmaDTO.of(turmaSave);
@@ -39,11 +44,12 @@ public class TurmaService {
     }
 
     public TurmaDTO update(TurmaDTO turmaDTO, Long id){
-        LOGGER.info("Executando delete para turma de ID: [{}]", id);
+        LOGGER.info("Executando update para turma de ID: [{}]", id);
         Turma turmaUpdate = this.findById(id);
         turmaUpdate.setTurno(turmaDTO.getTurno());
         turmaUpdate.setProfessores(this.iProfessoreRepository.findAllProfessorByIds(turmaDTO.getProfessores()));
         turmaUpdate.setAlunos(this.iAlunoRepository.findAllAlunosByIds(turmaDTO.getAlunos()));
+        turmaUpdate = iTurmaRepository.save(turmaUpdate);
         return TurmaDTO.of(turmaUpdate);
     }
 

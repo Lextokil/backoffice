@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -29,9 +28,8 @@ public class TurmaDTO {
     @Enumerated(EnumType.STRING)
     private Turno turno;
 
-    @NotEmpty(message = "A turma deve conter alunos")
     private List<Long> alunos;
-    @NotEmpty(message = "A turma deve conter professores")
+
     private List<Long> professores;
     
     public static TurmaDTO of(Turma turma){
@@ -40,8 +38,8 @@ public class TurmaDTO {
         return new TurmaDTO(
                 turma.getId(),
                 turma.getTurno(),
-                professores,
-                alunos);
+                alunos,
+                professores);
     }
     
 }

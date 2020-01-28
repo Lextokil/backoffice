@@ -18,13 +18,16 @@ public class AlunoService {
     private static final String ID_INEXISTENTE = "ID NÃO EXISTE: ";
     private final  IAlunoRepository iAlunoRepository;
     private final IBoletimRepository iBoletimRepository;
-    private final IProfessoreRepository iProfessoreRepository;
     private final TurmaService turmaService;
 
     public AlunoDTO save(AlunoDTO alunoDTO) {
         LOGGER.info("Salvando Aluno");
         LOGGER.debug("Aluno: {}", alunoDTO);
-        Aluno alunoSave = new Aluno();
+        Aluno alunoSave = new Aluno(
+                alunoDTO.getId(),
+                alunoDTO.getNome(),
+                turmaService.findById(alunoDTO.getTurma())
+        );
 
         alunoSave = this.iAlunoRepository.save(alunoSave);
         return AlunoDTO.of(alunoSave);
@@ -43,15 +46,13 @@ public class AlunoService {
     public AlunoDTO update(AlunoDTO alunoDTO, Long id){
         LOGGER.info("Executando update para aluno de ID: [{}]", id);
         Aluno alunoUpdate = this.findById(id);
-        alunoUpdate.setTurno(alunoDTO.getTurno());
         alunoUpdate.setNome(alunoDTO.getNome());
         alunoUpdate.setBoletins(this.iBoletimRepository.findAllBoletimByIds(alunoDTO.getBoletins()));
-        alunoUpdate.setProfessores(this.iProfessoreRepository.findAllProfessorByIds(alunoDTO.getProfessores()));
         alunoUpdate.setTurma(this.turmaService.findById(alunoDTO.getTurma()));
+        alunoUpdate = iAlunoRepository.save(alunoUpdate);
 
         return AlunoDTO.of(alunoUpdate);
     }
-
     public void delete(Long id) {
         LOGGER.info("Executando delete para aluno de ID: [{}]", id);
         this.iAlunoRepository.deleteById(id);

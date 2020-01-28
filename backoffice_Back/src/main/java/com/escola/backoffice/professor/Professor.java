@@ -1,15 +1,13 @@
 package com.escola.backoffice.professor;
 
-import com.escola.backoffice.aluno.Aluno;
 import com.escola.backoffice.turma.Turma;
 import com.escola.backoffice.util.Materia;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,12 +24,9 @@ public class Professor {
     @Column(name = "nome")
     private String nome;
 
-    @ManyToMany(mappedBy = "professores")
-    private Set<Aluno> alunos = new HashSet<>();
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "professor_turma", joinColumns = @JoinColumn(name = "id_professor", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_turma", referencedColumnName = "id"))
-    private Set<Turma> turmas = new HashSet<>();
+    private List<Turma> turmas = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(name = "materia")
