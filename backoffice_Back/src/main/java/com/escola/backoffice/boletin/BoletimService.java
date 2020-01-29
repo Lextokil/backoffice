@@ -2,12 +2,13 @@ package com.escola.backoffice.boletin;
 
 import com.escola.backoffice.aluno.Aluno;
 import com.escola.backoffice.aluno.AlunoService;
-import com.escola.backoffice.professor.ProfessorDTO;
+import com.escola.backoffice.util.Materia;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,7 +45,6 @@ public class BoletimService {
     public BoletimDTO update(BoletimDTO boletimDTO, Long id) {
         LOGGER.info("Executando update para boletim de ID: [{}]", id);
         Boletim boletimUpdate = this.findById(id);
-        boletimUpdate.setAluno(this.alunoService.findById(boletimDTO.getAluno()));
         for (int i = 0; i < boletimUpdate.getMateriaNotas().size(); i++) {
             boletimUpdate.getMateriaNotas().get(i).setNota(boletimDTO.getMateriaNotas().get(i));
         }
@@ -52,10 +52,27 @@ public class BoletimService {
         return BoletimDTO.of(boletimUpdate);
     }
 
-    public List<Boletim> findAllByAluno(Long id){
+    public List<BoletimDTO> findAllByAluno(Long id) {
         Aluno alunoRef = this.alunoService.findById(id);
-        List<Boletim> boletinsDoAluno = iBoletimRepository.findAllByAluno(alunoRef);
+        List<BoletimDTO> boletinsDoAluno = iBoletimRepository.findAllByAluno(alunoRef);
         return boletinsDoAluno;
+    }
+
+    public List<BoletimCompleto> getBoletimCompletoAluno(Long id) {
+        List<BoletimDTO> boletins = this.findAllByAluno(id);
+        List<BoletimCompleto> boletinsCompletos = new ArrayList<>();
+        for (int i = 0; i < Materia.values().length; i++) {
+            BoletimCompleto bc = new BoletimCompleto();
+            bc.setMaterias(boletins.get(0).getMaterias().get(i));
+            bc.setBim1(boletins.get(0).getMateriaNotas().get(i));
+            bc.setBim2(boletins.get(1).getMateriaNotas().get(i));
+            bc.setBim3(boletins.get(2).getMateriaNotas().get(i));
+            bc.setBim4(boletins.get(3).getMateriaNotas().get(i));
+            Double media = (bc.getBim1() + bc.getBim2() + bc.getBim3() + bc.getBim4()) / 4;
+            bc.setMedia(media);
+            boletinsCompletos.add(bc);
+        }
+        return boletinsCompletos;
     }
 
     public void delete(Long id) {

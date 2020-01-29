@@ -12,5 +12,5 @@ public interface IBoletimRepository extends JpaRepository<Boletim, Long> {
     @Query(value = "SELECT a FROM Boletim a WHERE id like:ids ")
     List<Boletim> findAllBoletimByIds(@Param("ids")List<Long> ids);
 
-    List<Boletim> findAllByAluno(Aluno id);
+    List<BoletimDTO> findAllByAluno(Aluno id);
 }

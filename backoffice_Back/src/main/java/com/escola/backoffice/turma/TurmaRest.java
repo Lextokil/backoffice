@@ -35,7 +35,7 @@ public class TurmaRest {
     }
 
     @GetMapping("/all")
-    public List<Turma> findAllTurmas(){
+    public List<TurmaDTO> findAllTurmas(){
         return turmaService.findAll();
     }
 

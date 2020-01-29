@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,9 +39,11 @@ public class TurmaService {
         return this.iTurmaRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(ID_INEXISTENTE + id));
     }
 
-    public List<Turma> findAll(){
+    public List<TurmaDTO> findAll(){
         LOGGER.info("Buscando todas as turmas");
-        return iTurmaRepository.findAll();
+        List<TurmaDTO>turmas = new ArrayList<>();
+        iTurmaRepository.findAll().forEach(turma -> turmas.add(TurmaDTO.of(turma)));
+        return turmas;
     }
 
     public TurmaDTO update(TurmaDTO turmaDTO, Long id){

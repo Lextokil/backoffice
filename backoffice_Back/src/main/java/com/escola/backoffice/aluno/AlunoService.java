@@ -1,13 +1,13 @@
 package com.escola.backoffice.aluno;
 
 import com.escola.backoffice.boletin.IBoletimRepository;
-import com.escola.backoffice.professor.IProfessoreRepository;
 import com.escola.backoffice.turma.TurmaService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,9 +38,12 @@ public class AlunoService {
         return this.iAlunoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(ID_INEXISTENTE + id));
     }
 
-    public List<Aluno> findAll(){
+
+    public List<AlunoDTO> findAll(){
         LOGGER.info("Buscando todos os alunos");
-        return iAlunoRepository.findAll();
+        List<AlunoDTO> alunos = new ArrayList<>();
+        iAlunoRepository.findAll().forEach(aluno -> alunos.add(AlunoDTO.of(aluno)));
+        return alunos;
     }
 
     public AlunoDTO update(AlunoDTO alunoDTO, Long id){

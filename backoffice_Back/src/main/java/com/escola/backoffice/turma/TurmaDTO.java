@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TurmaDTO {
-    
+
     private Long id;
     
     @Size(max = 15, message = "O Turno não pode conter mais de 15 caracteres.")

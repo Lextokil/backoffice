@@ -21,14 +21,18 @@ public class BoletimDTO {
     @NotBlank(message = "Boletim deve conter um aluno")
     private Long aluno;
 
+    private List<String> materias;
+
     private List<Double> materiaNotas;
 
 
     public static BoletimDTO of(Boletim boletim){
         List<Double> materiaNotas = boletim.getMateriaNotas().stream().map(MateriaNota::getNota).collect(Collectors.toList());
+        List<String> materias = boletim.getMateriaNotas().stream().map(MateriaNota::getMateria).collect(Collectors.toList());
         return new BoletimDTO(
                 boletim.getId(),
                 boletim.getAluno().getId(),
+                materias,
                 materiaNotas
         );
     }

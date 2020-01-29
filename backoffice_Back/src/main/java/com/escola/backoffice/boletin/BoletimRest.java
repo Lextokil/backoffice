@@ -1,10 +1,15 @@
 package com.escola.backoffice.boletin;
 
+import com.escola.backoffice.reportservice.ReportService;
+import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -14,18 +19,14 @@ public class BoletimRest {
     private static final Logger LOGGER = LoggerFactory.getLogger(BoletimRest.class);
 
     private final BoletimService boletimService;
+    private final ReportService reportService;
 
     @Autowired
-    public BoletimRest(BoletimService boletimService) {
+    public BoletimRest(BoletimService boletimService, ReportService reportService) {
         this.boletimService = boletimService;
+        this.reportService = reportService;
     }
 
-    @PostMapping
-    public BoletimDTO save(@RequestBody BoletimDTO boletimDTO) {
-        LOGGER.info("Recebendo solicitação de persistência para boletim...");
-        LOGGER.debug("Payload: {}", boletimDTO);
-        return this.boletimService.save(boletimDTO);
-    }
 
     @GetMapping("/{id}")
     public BoletimDTO findBoletimById(@PathVariable("id") Long id) {
@@ -41,9 +42,15 @@ public class BoletimRest {
     }
 
     @GetMapping("/all/{id}")
-    public List<Boletim> findAllBoletinsByAluno(@PathVariable("id") Long id) {
+    public List<BoletimDTO> findAllBoletinsByAluno(@PathVariable("id") Long id) {
 
         return boletimService.findAllByAluno(id);
+    }
+
+    @GetMapping("/export/{id}")
+    public void exportBoletim(HttpServletResponse response , @PathVariable("id") Long id) throws IOException, JRException {
+        LOGGER.info("Recebendo exportação para boletim do aluno de ID: {}", id);
+        reportService.exportReport(response,id);
     }
 
     @PutMapping("/{id}")

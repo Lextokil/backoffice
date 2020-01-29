@@ -28,7 +28,7 @@ public class AlunoRest {
     }
 
     @GetMapping("/{id}")
-    public AlunoDTO findAlunoById(@PathVariable("id") Long id) {
+    public AlunoDTO findAlunoDTOById(@PathVariable("id") Long id) {
 
         LOGGER.info("Recebendo find by ID... id: [{}]", id);
 
@@ -36,7 +36,7 @@ public class AlunoRest {
     }
 
     @GetMapping("/all")
-    public List<Aluno> findAllTurmas() {
+    public List<AlunoDTO> findAllTurmas() {
         return alunoService.findAll();
     }
 
