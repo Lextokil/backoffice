@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin(origins = {"http://localhost:4200", "*"})
 @RestController
 @RequestMapping("boletins")
 public class BoletimRest {
@@ -48,9 +48,9 @@ public class BoletimRest {
     }
 
     @GetMapping("/export/{id}")
-    public void exportBoletim(HttpServletResponse response , @PathVariable("id") Long id) throws IOException, JRException {
+    public void exportBoletim(HttpServletResponse response, @PathVariable("id") Long id) throws IOException, JRException {
         LOGGER.info("Recebendo exportação para boletim do aluno de ID: {}", id);
-        reportService.exportReport(response,id);
+        reportService.exportReport(response, id);
     }
 
     @PutMapping("/{id}")

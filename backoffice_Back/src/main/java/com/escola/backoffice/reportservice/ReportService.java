@@ -1,6 +1,7 @@
 package com.escola.backoffice.reportservice;
 
-import com.escola.backoffice.boletin.*;
+import com.escola.backoffice.boletin.BoletimCompleto;
+import com.escola.backoffice.boletin.BoletimService;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.slf4j.Logger;
@@ -12,7 +13,6 @@ import org.springframework.util.ResourceUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
