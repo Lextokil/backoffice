@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:4200", "*"})
 @RestController
 @RequestMapping("boletins")
+@CrossOrigin(origins = {"http://localhost:4200","*"})
 public class BoletimRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoletimRest.class);
@@ -42,9 +42,9 @@ public class BoletimRest {
     }
 
     @GetMapping("/all/{id}")
-    public List<BoletimDTO> findAllBoletinsByAluno(@PathVariable("id") Long id) {
+    public List<BoletimCompleto> findAllBoletinsByAluno(@PathVariable("id") Long id) {
 
-        return boletimService.findAllByAluno(id);
+        return boletimService.getBoletimCompletoAluno(id);
     }
 
     @GetMapping("/export/{id}")
@@ -60,12 +60,13 @@ public class BoletimRest {
 
         return this.boletimService.update(boletimDTO, id);
     }
+    @PutMapping("/updateAll/{idAluno}")
+    public List<BoletimDTO> udpateAllByAluno(@PathVariable("idAluno") Long idAluno, @RequestBody List<BoletimCompleto> boletimDTOS) {
+        LOGGER.info("Recebendo Update all by aluno");
+        LOGGER.debug("Payload: {}", boletimDTOS);
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
-        LOGGER.info("Recebendo Delete para boletim de ID: {}", id);
-
-        this.boletimService.delete(id);
+        return this.boletimService.convertAndUpdateAll(boletimDTOS, idAluno);
     }
+
 
 }

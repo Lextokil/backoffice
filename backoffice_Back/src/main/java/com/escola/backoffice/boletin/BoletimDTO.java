@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,9 +22,9 @@ public class BoletimDTO {
     @NotBlank(message = "Boletim deve conter um aluno")
     private Long aluno;
 
-    private List<String> materias;
+    private List<String> materias = new ArrayList<>();
 
-    private List<Double> materiaNotas;
+    private List<Double> materiaNotas = new ArrayList<>();
 
 
     public static BoletimDTO of(Boletim boletim){

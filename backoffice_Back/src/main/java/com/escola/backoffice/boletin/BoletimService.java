@@ -2,6 +2,7 @@ package com.escola.backoffice.boletin;
 
 import com.escola.backoffice.aluno.Aluno;
 import com.escola.backoffice.aluno.AlunoService;
+import com.escola.backoffice.materianota.MateriaNota;
 import com.escola.backoffice.util.Materia;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -9,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -75,6 +78,32 @@ public class BoletimService {
         return boletinsCompletos;
     }
 
-    public void delete(Long id) {
+    public List<BoletimDTO> convertAndUpdateAll(List<BoletimCompleto> boletimCompletos, Long idAluno) {
+        List<String> materias = new ArrayList<>();
+        BoletimDTO[] boletinsDtos = new BoletimDTO[4];
+        for(int i=0; i< boletinsDtos.length;i++)
+            boletinsDtos[i] = new BoletimDTO();
+        for (int i = 0; i < boletimCompletos.size(); i++) {
+            materias.add(boletimCompletos.get(i).getMaterias());
+            boletinsDtos[0].getMateriaNotas().add(boletimCompletos.get(i).getBim1());
+            boletinsDtos[1].getMateriaNotas().add(boletimCompletos.get(i).getBim2());
+            boletinsDtos[2].getMateriaNotas().add(boletimCompletos.get(i).getBim3());
+            boletinsDtos[3].getMateriaNotas().add(boletimCompletos.get(i).getBim4());
+        }
+        boletinsDtos[0].setMaterias(materias);
+        boletinsDtos[1].setMaterias(materias);
+        boletinsDtos[2].setMaterias(materias);
+        boletinsDtos[3].setMaterias(materias);
+
+        return updateAll(Arrays.asList(boletinsDtos), idAluno);
     }
+
+    public List<BoletimDTO> updateAll(List<BoletimDTO> boletimDTOS, Long id) {
+        List<BoletimDTO> boletinsUpdatados = findAllByAluno(id);
+        for (int i = 0; i < boletimDTOS.size(); i++) {
+            this.update(boletimDTOS.get(i), boletinsUpdatados.get(i).getId());
+        }
+        return boletimDTOS;
+    }
+
 }

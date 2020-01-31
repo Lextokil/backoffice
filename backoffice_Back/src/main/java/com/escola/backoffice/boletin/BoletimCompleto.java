@@ -1,5 +1,6 @@
 package com.escola.backoffice.boletin;
 
+import javafx.application.Preloader;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,5 @@ public class BoletimCompleto {
     private Double bim4;
 
     private Double media;
+
 }
