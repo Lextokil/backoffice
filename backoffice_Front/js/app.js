@@ -1,1 +1,4 @@
-angular.module("escola", []);
+angular.module("escola", ["ngRoute"]);
+
+
+ 

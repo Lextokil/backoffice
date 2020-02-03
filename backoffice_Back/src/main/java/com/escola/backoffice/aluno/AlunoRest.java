@@ -36,9 +36,10 @@ public class AlunoRest {
         return AlunoDTO.of(this.alunoService.findById(id));
     }
 
-    @GetMapping("/all")
-    public List<AlunoDTO> findAllTurmas() {
-        return alunoService.findAll();
+    @GetMapping("/allByTurma/{id}")
+    public List<AlunoDTO> findAllTurmas(@PathVariable("id") Long id) {
+        LOGGER.info("Buscando alunos pelo id da turma:[{}]", id);
+        return alunoService.findAllByTurma(id);
     }
 
     @PutMapping("/{id}")
@@ -47,6 +48,12 @@ public class AlunoRest {
         LOGGER.debug("Payload: {}", alunoDTO);
 
         return this.alunoService.update(alunoDTO, id);
+    }
+    @PutMapping("/updateAll")
+    public List<AlunoDTO> udpateAll( @RequestBody List<AlunoDTO> alunoDTOs) {
+        LOGGER.info("Recebendo Update para alunos");
+
+        return this.alunoService.updateAll(alunoDTOs);
     }
 
     @DeleteMapping("/{id}")

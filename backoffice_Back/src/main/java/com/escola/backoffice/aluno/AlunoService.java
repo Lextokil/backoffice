@@ -1,6 +1,7 @@
 package com.escola.backoffice.aluno;
 
 import com.escola.backoffice.boletin.IBoletimRepository;
+import com.escola.backoffice.turma.Turma;
 import com.escola.backoffice.turma.TurmaService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -39,18 +40,19 @@ public class AlunoService {
     }
 
 
-    public List<AlunoDTO> findAll(){
-        LOGGER.info("Buscando todos os alunos");
-        List<AlunoDTO> alunos = new ArrayList<>();
-        iAlunoRepository.findAll().forEach(aluno -> alunos.add(AlunoDTO.of(aluno)));
-        return alunos;
+    public List<AlunoDTO> findAllByTurma(Long id){
+        LOGGER.info("Buscando todos os alunos pela turma: [{}]", id);
+        Turma turma = turmaService.findById(id);
+
+        return iAlunoRepository.findAllByTurma(turma);
     }
 
     public AlunoDTO update(AlunoDTO alunoDTO, Long id){
         LOGGER.info("Executando update para aluno de ID: [{}]", id);
         Aluno alunoUpdate = this.findById(id);
         alunoUpdate.setNome(alunoDTO.getNome());
-        alunoUpdate.setBoletins(this.iBoletimRepository.findAllBoletimByIds(alunoDTO.getBoletins()));
+        alunoUpdate.getBoletins().clear();
+        alunoUpdate.getBoletins().addAll(this.iBoletimRepository.findAllBoletimByIds(alunoDTO.getBoletins()));
         alunoUpdate.setTurma(this.turmaService.findById(alunoDTO.getTurma()));
         alunoUpdate = iAlunoRepository.save(alunoUpdate);
 
@@ -59,6 +61,12 @@ public class AlunoService {
     public void delete(Long id) {
         LOGGER.info("Executando delete para aluno de ID: [{}]", id);
         this.iAlunoRepository.deleteById(id);
+    }
+
+    public List<AlunoDTO> updateAll(List<AlunoDTO> alunoDTOS){
+        alunoDTOS.forEach(alunoDTO -> this.update(alunoDTO, alunoDTO.getId()));
+
+        return alunoDTOS;
     }
 
 }

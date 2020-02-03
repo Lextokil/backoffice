@@ -2,7 +2,6 @@ package com.escola.backoffice.boletin;
 
 import com.escola.backoffice.aluno.Aluno;
 import com.escola.backoffice.aluno.AlunoService;
-import com.escola.backoffice.materianota.MateriaNota;
 import com.escola.backoffice.util.Materia;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -11,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -48,7 +47,15 @@ public class BoletimService {
     public BoletimDTO update(BoletimDTO boletimDTO, Long id) {
         LOGGER.info("Executando update para boletim de ID: [{}]", id);
         Boletim boletimUpdate = this.findById(id);
+        Collections.replaceAll(boletimDTO.getMateriaNotas(),null, 0.0);
         for (int i = 0; i < boletimUpdate.getMateriaNotas().size(); i++) {
+            if (boletimDTO.getMateriaNotas().get(i) < 0 ) {
+                boletimDTO.getMateriaNotas().set(i, 0.00);
+            }
+            if (boletimDTO.getMateriaNotas().get(i) > 10) {
+                boletimDTO.getMateriaNotas().set(i, 10.00);
+            }
+
             boletimUpdate.getMateriaNotas().get(i).setNota(boletimDTO.getMateriaNotas().get(i));
         }
         boletimUpdate = iBoletimRepository.save(boletimUpdate);
@@ -57,8 +64,7 @@ public class BoletimService {
 
     public List<BoletimDTO> findAllByAluno(Long id) {
         Aluno alunoRef = this.alunoService.findById(id);
-        List<BoletimDTO> boletinsDoAluno = iBoletimRepository.findAllByAluno(alunoRef);
-        return boletinsDoAluno;
+        return iBoletimRepository.findAllByAluno(alunoRef);
     }
 
     public List<BoletimCompleto> getBoletimCompletoAluno(Long id) {
@@ -81,14 +87,14 @@ public class BoletimService {
     public List<BoletimDTO> convertAndUpdateAll(List<BoletimCompleto> boletimCompletos, Long idAluno) {
         List<String> materias = new ArrayList<>();
         BoletimDTO[] boletinsDtos = new BoletimDTO[4];
-        for(int i=0; i< boletinsDtos.length;i++)
+        for (int i = 0; i < boletinsDtos.length; i++)
             boletinsDtos[i] = new BoletimDTO();
-        for (int i = 0; i < boletimCompletos.size(); i++) {
-            materias.add(boletimCompletos.get(i).getMaterias());
-            boletinsDtos[0].getMateriaNotas().add(boletimCompletos.get(i).getBim1());
-            boletinsDtos[1].getMateriaNotas().add(boletimCompletos.get(i).getBim2());
-            boletinsDtos[2].getMateriaNotas().add(boletimCompletos.get(i).getBim3());
-            boletinsDtos[3].getMateriaNotas().add(boletimCompletos.get(i).getBim4());
+        for (BoletimCompleto boletimCompleto : boletimCompletos) {
+            materias.add(boletimCompleto.getMaterias());
+            boletinsDtos[0].getMateriaNotas().add(boletimCompleto.getBim1());
+            boletinsDtos[1].getMateriaNotas().add(boletimCompleto.getBim2());
+            boletinsDtos[2].getMateriaNotas().add(boletimCompleto.getBim3());
+            boletinsDtos[3].getMateriaNotas().add(boletimCompleto.getBim4());
         }
         boletinsDtos[0].setMaterias(materias);
         boletinsDtos[1].setMaterias(materias);

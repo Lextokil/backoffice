@@ -3,7 +3,8 @@ package com.escola.backoffice.util;
 public enum Turno {
 
     MATUTINO("MATUTINO"),
-    VESPERTINO("VESPERTINO");
+    VESPERTINO("VESPERTINO"),
+    NOTURNO("NORTUNO");
 
     private final String descricao;
 

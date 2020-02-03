@@ -1,0 +1,48 @@
+<div class="jumbotron">
+    <h3>{{app}}</h3>
+    <form name="boletimForm">
+        <select class="form-control" ng-model="aluno" ng-options="aluno.nome for aluno in alunos" required>
+            <option value="">Selecione o aluno desejado</option>
+        </select>
+    </form>
+        <table class="table table-striped">
+            <tr>
+                <th>Materia</th>
+                <th>1º Bim</th>
+                <th>2º Bim</th>
+                <th>3º bim</th>
+                <th>4º bim</th>
+                <th>Media</th>
+            </tr>
+            <tr ng-class="{'selecionado negrito': boletim.selecionado}" ng-repeat="boletim in boletins">
+                <td>{{boletim.materias}}</td>
+                <td><input class="input" ng-model="boletim.bim1" type="number" ng-change="onChange(boletim)"
+                        ng-disabled="isEditable()" value="{{boletim.bim1}}"></td>
+                <td><input class="input" ng-model="boletim.bim2" type="number" ng-change="onChange(boletim)"
+                        ng-disabled="isEditable()" value="{{boletim.bim2}}"></td>
+                <td><input class="input" ng-model="boletim.bim3" type="number" ng-change="onChange(boletim)"
+                        ng-disabled="isEditable()" value="{{boletim.bim3}}"></td>
+                <td><input class="input" ng-model="boletim.bim4" type="number" ng-change="onChange(boletim)"
+                        ng-disabled="isEditable()" value="{{boletim.bim4}}"></td>
+                <td><input class="input" ng-disabled="true" value="{{media(boletim)}}"></td>
+
+            </tr>
+        </table>
+    
+    <hr />
+
+    </form>
+    <!-- <div ng-show="boletimForm.aluno == 'Selecione o aluno desejado'"  class="alert alert-danger">Por favor
+        preencha o nome</div> -->
+
+
+    <hr>
+    <div>
+        <button class="btn btn-primary" ng-click="carregarBoletinsDoAluno(aluno.id)">Buscar</button>
+        <button class="btn btn-primary" ng-click="editable()">Editar</button>
+        <button class="btn btn-primary" ng-click="exportarBoletim(aluno.id);">Exportar</button>
+        <button class="btn btn-primary" ng-click="salvarBoletins(boletins, aluno.id)">Salvar</button>
+    </div>
+
+
+</div>

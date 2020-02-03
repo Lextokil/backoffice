@@ -1,0 +1,49 @@
+<div class="jumbotron">
+    <h3>{{app}}</h3>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Nome</th>
+            <th>Periodo</th>
+            <th>Turma</th>
+        </tr>
+        <tr ng-class="" ng-repeat="aluno in alunos">
+
+            <td><input class="inputAluno" ng-model="aluno.nome" type="text" ng-change="onChange(boletim)"
+                    ng-disabled="isEditable()" value="{{aluno.nome}}"></td>
+            <td><input class="inputAluno" ng-model="turma.turno" type="text" ng-change="onChange(boletim)"
+                    ng-disabled="true" value="{{turma}}"></td>
+            <!-- <td><input class="inputAluno" ng-model="turma.id" type="text" ng-change="onChange(boletim)"
+                    ng-disabled="isEditable()" value="{{turma.id}}"></td> -->
+            <td><select class="form-control" ng-model="aluno.turma" 
+                    ng-disabled="isEditable()"  required>
+                    <option ng-repeat="turma in turmas" ng-value="{{turma.id}}">{{turma.id}}</option>
+                </select></td>
+        </tr>
+    </table>
+
+    <hr />
+
+    </form>
+    <!-- <div ng-show="true" class="alert alert-danger">Por favor
+        preencha o nome</div>
+    <div ng-show="boletimForm.telefone.$invalid && contatoForm.telefone.$dirty" class="alert alert-danger">Por favor
+        preencha o telefone</div>
+    <div ng-show="boletimForm.telefone.$error.pattern" class="alert alert-danger">O campo deve ter o formato: XX.XX
+    </div> -->
+
+
+    <hr>
+    <div>
+        <form name="boletimForm">
+            <select class="form-control" ng-model="turma" ng-options="turma.id for turma in turmas" required>
+                <option value="">Selecione a turma desejada</option>
+            </select>
+        </form>
+        <button class="btn btn-primary" ng-click="carregarAlunosByTurma(turma.id)">Buscar</button>
+        <button class="btn btn-primary" ng-click="editable()">Editar</button>
+        <button class="btn btn-primary" ng-click="salvarAlunos(alunos, turma.id)">Salvar</button>
+    </div>
+
+
+</div>
