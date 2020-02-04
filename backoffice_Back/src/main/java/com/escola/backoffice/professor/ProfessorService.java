@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,9 +39,11 @@ public class ProfessorService {
         return this.iProfessoreRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(ID_INEXISTENTE + id));
     }
 
-    public List<Professor> findAll() {
+    public List<ProfessorDTO> findAll() {
         LOGGER.info("Buscando todas as professores");
-        return iProfessoreRepository.findAll();
+        List<ProfessorDTO>professorDTOS = new ArrayList<>();
+        iProfessoreRepository.findAll().forEach(professor -> professorDTOS.add(ProfessorDTO.of(professor)));
+        return professorDTOS;
     }
 
     public ProfessorDTO update(ProfessorDTO professorDTO, Long id) {

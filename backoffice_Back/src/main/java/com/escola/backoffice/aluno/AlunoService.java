@@ -50,11 +50,14 @@ public class AlunoService {
     public AlunoDTO update(AlunoDTO alunoDTO, Long id){
         LOGGER.info("Executando update para aluno de ID: [{}]", id);
         Aluno alunoUpdate = this.findById(id);
-        alunoUpdate.setNome(alunoDTO.getNome());
-        alunoUpdate.getBoletins().clear();
-        alunoUpdate.getBoletins().addAll(this.iBoletimRepository.findAllBoletimByIds(alunoDTO.getBoletins()));
-        alunoUpdate.setTurma(this.turmaService.findById(alunoDTO.getTurma()));
-        alunoUpdate = iAlunoRepository.save(alunoUpdate);
+        if(AlunoDTO.of(alunoUpdate)!= alunoDTO){
+            alunoUpdate.setNome(alunoDTO.getNome());
+            alunoUpdate.getBoletins().clear();
+            alunoUpdate.getBoletins().addAll(this.iBoletimRepository.findAllBoletimByIds(alunoDTO.getBoletins()));
+            alunoUpdate.setTurma(this.turmaService.findById(alunoDTO.getTurma()));
+            alunoUpdate = iAlunoRepository.save(alunoUpdate);
+        }
+
 
         return AlunoDTO.of(alunoUpdate);
     }
@@ -69,4 +72,11 @@ public class AlunoService {
         return alunoDTOS;
     }
 
+    public List<AlunoDTO> findAll() {
+        LOGGER.info("Retornando todos os alunos");
+        List<AlunoDTO> alunoDTOS = new ArrayList<>();
+        this.iAlunoRepository.findAll().forEach(aluno -> alunoDTOS.add(AlunoDTO.of(aluno)));
+        return alunoDTOS;
+
+    }
 }

@@ -7,6 +7,10 @@ angular.module("escola").config(function ($routeProvider) {
     .when("/aluno", {
         templateUrl: "aluno/alunoView.html",
         controller: "alunoController"
+    })
+    .when("/professor", {
+        templateUrl: "professor/professorView.html",
+        controller: "professorController"
     }).otherwise({ redirectTo: "/index.html" });
     
 

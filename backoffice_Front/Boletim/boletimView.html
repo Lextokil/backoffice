@@ -5,7 +5,8 @@
             <option value="">Selecione o aluno desejado</option>
         </select>
     </form>
-        <table class="table table-striped">
+    <table class="table table-striped">
+        <thead>
             <tr>
                 <th>Materia</th>
                 <th>1º Bim</th>
@@ -14,6 +15,8 @@
                 <th>4º bim</th>
                 <th>Media</th>
             </tr>
+        </thead>
+        <tbody>
             <tr ng-class="{'selecionado negrito': boletim.selecionado}" ng-repeat="boletim in boletins">
                 <td>{{boletim.materias}}</td>
                 <td><input class="input" ng-model="boletim.bim1" type="number" ng-change="onChange(boletim)"
@@ -25,24 +28,25 @@
                 <td><input class="input" ng-model="boletim.bim4" type="number" ng-change="onChange(boletim)"
                         ng-disabled="isEditable()" value="{{boletim.bim4}}"></td>
                 <td><input class="input" ng-disabled="true" value="{{media(boletim)}}"></td>
-
             </tr>
-        </table>
-    
+        </tbody>
+        
+    </table>
+
     <hr />
 
     </form>
     <!-- <div ng-show="boletimForm.aluno == 'Selecione o aluno desejado'"  class="alert alert-danger">Por favor
         preencha o nome</div> -->
-
+        <div>
+            <a class="btn btn-white btn-animate" ng-click="carregarBoletinsDoAluno(aluno.id)">Buscar</a>
+            <a class="btn btn-white btn-animate" ng-click="editable()">Editar</a>
+            <a class="btn btn-white btn-animate" ng-click="exportarBoletim(aluno.id);">Exportar</a>
+            <a class="btn btn-white btn-animate" ng-click="salvarBoletins(boletins, aluno.id)">Salvar</a>
+        </div>
 
     <hr>
-    <div>
-        <button class="btn btn-primary" ng-click="carregarBoletinsDoAluno(aluno.id)">Buscar</button>
-        <button class="btn btn-primary" ng-click="editable()">Editar</button>
-        <button class="btn btn-primary" ng-click="exportarBoletim(aluno.id);">Exportar</button>
-        <button class="btn btn-primary" ng-click="salvarBoletins(boletins, aluno.id)">Salvar</button>
-    </div>
+
 
 
 </div>

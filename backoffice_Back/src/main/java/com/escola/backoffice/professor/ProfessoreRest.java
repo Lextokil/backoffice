@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:4200","*"})
+@CrossOrigin(origins = {"http://localhost:5000"})
 @RestController
 @RequestMapping("professores")
 public class ProfessoreRest {
@@ -38,7 +38,7 @@ public class ProfessoreRest {
     }
 
     @GetMapping("/all")
-    public List<Professor> findAllProfessores(){
+    public List<ProfessorDTO> findAllProfessores(){
         return professorService.findAll();
     }
 

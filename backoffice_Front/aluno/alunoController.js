@@ -10,11 +10,17 @@ angular.module("escola").controller("alunoController", function ($scope, $http) 
     };
 
     $scope.carregarAlunosByTurma = function (id) {
-        $http.get("http://localhost:8080/alunos/allByTurma/" + id).then(function (data) {
-            $scope.alunos = data.data;
-        });
-        
-        console.log($scope.alunos);
+
+        if (isNaN(id)) {
+            $http.get("http://localhost:8080/alunos/all").then(function (data) {
+                $scope.alunos = data.data;
+            });
+        } else {
+            $http.get("http://localhost:8080/alunos/allByTurma/" + id).then(function (data) {
+                $scope.alunos = data.data;
+            });
+        }
+
     };
 
     $scope.isEditable = function () {
@@ -30,11 +36,29 @@ angular.module("escola").controller("alunoController", function ($scope, $http) 
 
     $scope.salvarAlunos = function (alunos, id) {
         condition = true;
-        console.log(alunos);
-        $http.put("http://localhost:8080/alunos/updateAll/", alunos).then(function (data) {
-
+        $http.put("http://localhost:8080/alunos/updateAll/", alunos).then(function (data, status) {
+            $scope.carregarAlunosByTurma(id);
         });
-        $scope.carregarAlunosByTurma(id);
+
+    };
+    $scope.deletarAluno = function (id, turmid) {
+        $http.delete("http://localhost:8080/alunos/" + id).then(function (data, status) {
+            console.log(id);
+            $scope.carregarAlunosByTurma(turmid);
+        });
+    };
+    $scope.cadastrarAluno = function (aluno, turma) {
+        condition = true;
+        aluno.turma = turma.id;
+        $http.post("http://localhost:8080/alunos/", aluno).then(function (data, status) {
+            $scope.carregarAlunosByTurma(aluno.turma);
+        });
+
+    };
+
+    $scope.turnoDoAluno = function(turmaid){
+        var index = $scope.turmas.findIndex(turma => turma.id == turmaid);
+        return $scope.turmas[index].turno;
     }
 
     carregarTurmas();

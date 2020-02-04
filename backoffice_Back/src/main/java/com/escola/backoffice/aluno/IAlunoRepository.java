@@ -16,4 +16,5 @@ public interface IAlunoRepository extends JpaRepository<Aluno, Long> {
 
 
     List<AlunoDTO> findAllByTurma(Turma id);
+
 }

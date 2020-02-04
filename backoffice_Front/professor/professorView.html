@@ -1,27 +1,28 @@
+
 <div class="jumbotron">
     <h3>{{app}}</h3>
     <div class="tableFixHead">
-        <table class="table table-striped">
+        <table class="table table-striped ">
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>Periodo</th>
-                    <th>Turma</th>
+                    <th>Materia</th>
+                    <th>Turmas</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-class="" ng-repeat="aluno in alunos">
+                <tr ng-class="" ng-repeat="professor in professores">
 
-                    <td><input class="inputAluno" ng-model="aluno.nome" type="text" ng-change="onChange(boletim)"
-                            ng-disabled="isEditable()" value="{{aluno.nome}}"></td>
-                    <td><input class="inputAluno" ng-model="turno" type="text" ng-change="onChange(boletim)"
-                            ng-disabled="true" ng-value="turnoDoAluno(aluno.turma)"></td>
-                    <td><select class="form-control" ng-model="aluno.turma" ng-disabled="isEditable()" required>
+                    <td><input class="inputAluno" ng-model="professor.nome" type="text" ng-change="onChange(boletim)"
+                            ng-disabled="isEditable()" value="{{professor.nome}}"></td>
+                    <td><input class="inputAluno" ng-model="professor" type="text" ng-change="onChange(boletim)"
+                            ng-disabled="isEditable()" ng-value="professor.materia"></td>
+                    <td><select class="form-control" ng-model="professor.turmas" ng-disabled="isEditable()" required>
                             <option ng-repeat="turma in turmas" ng-value="{{turma.id}}">{{turma.id}}</option>
                         </select></td>
-                    <td><button type="button" ng-click="deletarAluno(aluno.id, turma.id)"
-                            class="btn btn-outline-danger">X</button></td>
+                    <td><button type="button" ng-click="deletarAluno(professor.id, turma.id)"
+                            class="btn btn-danger" fa-trash>X</button></td>
                 </tr>
             </tbody>
 
@@ -43,14 +44,13 @@
             </select>
         </form>
         <div style="margin-top: 20px;">
-            <a class="btn btn-white btn-animate" ng-click="carregarAlunosByTurma(turma.id)"
+            <a class="btn btn-white btn-animate" ng-click="carregarProfessoresByTurma(turma.id)"
                 style="margin-right: 5px;">Buscar</a>
             <a class="btn btn-white btn-animate" ng-click="editable()" style="margin-right: 5px;">Editar</a>
             <a class="btn btn-white btn-animate" ng-click="salvarAlunos(alunos, turma.id)"
                 style="margin-right: 5px;">Salvar</a>
-
-            <a ng-click="cadastrarAluno(aluno, turma)" class="btn btn-white btn-animate">Cadastrar</a>
-
+            <a class="btn btn-white btn-animate" ng-click="cadastrarAluno(aluno, turma)"
+                style="margin-right: 5px;">Cadastrar</a>
         </div>
 
 

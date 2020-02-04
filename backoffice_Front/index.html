@@ -5,17 +5,19 @@
     <meta charset='UTF-8'>
 
     <title>Escola</title>
-    <link rel="stylesheet" type="text/css" href="Boletim/boletim.css">
+    <link rel="stylesheet" type="text/css" href="boletim/boletim.css">
     <link rel="stylesheet" type="text/css" href="lib/bootstrap-4.4.1-dist/css/bootstrap.css">
 
 
     <script src="lib/angular-1.7.9/angular.js"></script>
     <script src="lib/angular-1.7.9/angular-route.js"></script>
-    <script src="js/app.js"></script>    
+    <script src="js/app.js"></script>
     <script src="config/routeConfig.js"></script>
     <script src="boletim/boletimController.js"></script>
     <script src="aluno/alunoController.js"></script>
-    
+    <script src="professor/professorController.js"></script>
+
+
 
 
 </head>
@@ -37,7 +39,7 @@
                     <a class="nav-link" href="#!/aluno">Alunos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Professores</a>
+                    <a class="nav-link" href="#!/professor">Professores</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#!/boletim">Boletins</a>
@@ -45,11 +47,13 @@
             </ul>
         </div>
     </nav>
-    
+
     <div ng-view="ng-view"></div>
 
 
 
+
+    
 
 </body>
 

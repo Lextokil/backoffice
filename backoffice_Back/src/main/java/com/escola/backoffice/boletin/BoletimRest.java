@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("boletins")
-@CrossOrigin(origins = {"http://localhost:4200","*"}, allowedHeaders = {"*"})
+@CrossOrigin(origins = {"http://localhost:5000"})
 public class BoletimRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BoletimRest.class);
