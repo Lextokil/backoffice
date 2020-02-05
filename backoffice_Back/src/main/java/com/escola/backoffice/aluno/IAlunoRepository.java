@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface IAlunoRepository extends JpaRepository<Aluno, Long> {
 
-    @Query(value = "SELECT a FROM Aluno a WHERE id like:ids ")
+    @Query(value = "SELECT a FROM Aluno a WHERE id in:ids ")
     List<Aluno> findAllAlunosByIds(@Param("ids")List<Long> ids);
 
 

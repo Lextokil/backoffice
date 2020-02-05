@@ -1,4 +1,4 @@
-angular.module("escola").controller("professorController", function ($scope, $http) {
+angular.module("escola").controller("turmaController", function ($scope, $http) {
     $scope.app = "Professores";
     $scope.professores = [];
     $scope.turmas = [];

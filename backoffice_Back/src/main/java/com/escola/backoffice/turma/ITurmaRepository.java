@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface ITurmaRepository extends JpaRepository<Turma, Long> {
 
-    @Query(value = "SELECT t FROM Turma t WHERE id like :ids ")
+    @Query(value = "SELECT t FROM Turma t WHERE t.id in :ids")
     List<Turma> findAllTurmasByIds(@Param("ids")List<Long> ids);
 }

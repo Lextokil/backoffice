@@ -42,12 +42,24 @@ public class ProfessoreRest {
         return professorService.findAll();
     }
 
+    @GetMapping("/allByTurma/{idturma}")
+    public List<ProfessorDTO> findAllProfessoresByTurma(@PathVariable("idturma") Long idturma) {
+        return professorService.findAllByTurma(idturma);
+    }
+
     @PutMapping("/{id}")
     public ProfessorDTO udpate(@PathVariable("id") Long id, @RequestBody ProfessorDTO professorDTO) {
         LOGGER.info("Recebendo Update para professor de ID: {}", id);
         LOGGER.debug("Payload: {}", professorDTO);
 
         return this.professorService.update(professorDTO, id);
+    }
+    @PutMapping("/updateAll")
+    public List<ProfessorDTO> udpateAll( @RequestBody List<ProfessorDTO> professorDTOS) {
+        LOGGER.info("Recebendo Update All");
+        LOGGER.debug("Payload: {}", professorDTOS);
+
+        return this.professorService.updateAll(professorDTOS);
     }
 
     @DeleteMapping("/{id}")

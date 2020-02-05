@@ -108,16 +108,27 @@ body {
       -webkit-transform: tr
     }
 }
-.tableFixHead          { overflow-y: auto; height: 325px; }
-.tableFixHead thead th { position: sticky; top: 0;  }
+.tableFixHead          { overflow-y: auto; height: 350px; }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 3;  }
 
-/* Just common table stuff. Really. */
+
 table  { border-collapse: collapse; width: 100%; }
-th, td { padding: 30px 10px; }
+th, td { 
+  padding: 30px 10px; 
+}
+
 th     { background:rgb(197, 202, 202); }
 
-/* Borders (if you need them) */
 .tableFixHead {  border-left: 0; border-right: 0; }
-.tableFixHead th, td {  border-top: 0; }
+.tableFixHead th, td{    
+    border-top: 0;  
+ }
 .tableFixHead tbody tr:last-child td { border-bottom: 0; }
+
+.table td{
+  vertical-align: middle;
+}
+
+
+
   

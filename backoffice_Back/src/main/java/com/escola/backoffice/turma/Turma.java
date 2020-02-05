@@ -34,6 +34,6 @@ public class Turma {
     )
     private List<Aluno> alunos = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "turmas")
+    @ManyToMany(cascade = CascadeType.PERSIST ,fetch = FetchType.EAGER, mappedBy = "turmas")
     private List<Professor> professores = new ArrayList<>();
 }

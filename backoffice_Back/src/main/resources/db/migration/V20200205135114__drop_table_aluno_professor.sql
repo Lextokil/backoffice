@@ -1,0 +1,1 @@
+drop table aluno_professor;

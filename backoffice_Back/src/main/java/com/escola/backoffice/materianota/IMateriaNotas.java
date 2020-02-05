@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface IMateriaNotas extends JpaRepository<MateriaNota, Long> {
 
-    @Query(value = "SELECT a FROM Boletim a WHERE id like:ids ")
+    @Query(value = "SELECT a FROM Boletim a WHERE id in:ids ")
     List<MateriaNota> findAllMateriaNotaByIds(@Param("ids")List<Long> ids);
 }

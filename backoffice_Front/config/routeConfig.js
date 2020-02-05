@@ -11,6 +11,9 @@ angular.module("escola").config(function ($routeProvider) {
     .when("/professor", {
         templateUrl: "professor/professorView.html",
         controller: "professorController"
+    }).when("/turma", {
+        templateUrl: "turma/turmaView.html",
+        controller: "turmaController"
     }).otherwise({ redirectTo: "/index.html" });
     
 
