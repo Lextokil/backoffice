@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin(origins = {"http://localhost:5000"})
 @RestController
@@ -46,6 +47,12 @@ public class TurmaRest {
         LOGGER.debug("Payload: {}", turmaDTO);
 
         return this.turmaService.update(turmaDTO, id);
+    }
+    @PutMapping("/updateAll")
+    public List<TurmaDTO> udpateAll(@RequestBody List<TurmaDTO> turmaDTO) {
+        LOGGER.info("Recebendo Update All para turmas");
+
+        return this.turmaService.updateAll(turmaDTO);
     }
 
     @DeleteMapping("/{id}")

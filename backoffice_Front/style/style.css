@@ -19,8 +19,8 @@
 }
 
 .input {
-    width: 60px;
     text-align: center;
+    width: 60px;
 }
 header-fixed {
     width: 100% 
@@ -29,7 +29,17 @@ header-fixed {
     width: 100%;
 }
 .inputAluno{
+  
+    width: max-content;
     text-align: center;
+}
+
+.inputTurma{  
+  width: 10em;
+  text-align: center;
+}
+.custom-select{
+  margin-bottom: 2px;
 }
 body {
     font-family: sans-serif;
@@ -109,7 +119,7 @@ body {
     }
 }
 .tableFixHead          { overflow-y: auto; height: 350px; }
-.tableFixHead thead th { position: sticky; top: 0; z-index: 3;  }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 10;  }
 
 
 table  { border-collapse: collapse; width: 100%; }
@@ -129,6 +139,25 @@ th     { background:rgb(197, 202, 202); }
   vertical-align: middle;
 }
 
+.alert{
+  display: none;
+}
 
+.ui-alert{  
+    background-color: #F2DEDE;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.ui-alert-title{
+  color: #AF4341;
+  font-weight: bold;
+  font-size: 18px;
 
-  
+}
+.ui-alert-message{
+    color: #AF4341;
+    font-size: 15px;
+}
+

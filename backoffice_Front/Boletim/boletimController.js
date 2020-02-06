@@ -1,5 +1,5 @@
 
-angular.module("escola").controller("boletimController", function ($scope, $http) {
+angular.module("escola").controller("boletimController", function ($scope, $http, $timeout) {
     $scope.app = "Boletim";
     $scope.boletins = [];
     $scope.alunos = [];
@@ -8,16 +8,31 @@ angular.module("escola").controller("boletimController", function ($scope, $http
         delete $scope.boletim;
         $scope.boletimForm.$setPristine();
     };
+
     $scope.carregarBoletinsDoAluno = function (id) {
-        $http.get("http://localhost:8080/boletins/all/" + id).then(function (data, status) {
-            $scope.boletins = data.data;
-        });
+
+        if (isNaN(id)) {
+            showAlertId();
+        } else {
+            console.log(id);
+            $http.get("http://localhost:8080/boletins/all/" + id).then(function (data, status) {
+                $scope.boletins = data.data;
+            });
+        }
+
     };
 
 
 
     $scope.exportarBoletim = function (id) {
-        window.location.href = "http://localhost:8080/boletins/export/" + id;
+        if (isNaN(id)) {
+            showAlertId();
+        } else {
+            window.location.href = "http://localhost:8080/boletins/export/" + id;
+            showAlertSuccess();
+
+        }
+
     };
     var carregarAlunos = function () {
         $http.get("http://localhost:8080/alunos/all").then(function (data) {
@@ -42,10 +57,14 @@ angular.module("escola").controller("boletimController", function ($scope, $http
     $scope.salvarBoletins = function (boletins, id) {
         $scope.boletins = boletins;
         condition = true;
-        console.log(boletins);
-        $http.put("http://localhost:8080/boletins/updateAll/" + id, boletins).then(function (data) {
+        if(isNaN(id)){
+            showAlertId();
+        }else{
+            $http.put("http://localhost:8080/boletins/updateAll/" + id, boletins).then(function (data) {
             $scope.carregarBoletinsDoAluno(id);
         });
+        }
+        
 
     }
 
@@ -61,6 +80,30 @@ angular.module("escola").controller("boletimController", function ($scope, $http
         return ((parseFloat(boletim.bim1) + parseFloat(boletim.bim2) + parseFloat(boletim.bim3) + parseFloat(boletim.bim4)) / 4).toFixed(2);
 
     }
+    
+    var showAlertId = function () {
+        var alert = document.getElementById("alertId");
+        alert.style.display = "block";
+        $timeout(hideAlertId, 4000);
+
+    }
+    var hideAlertId = function () {
+        var alert = document.getElementById("alertId");
+        alert.style.display = "none";
+    }
+
+    var showAlertSuccess = function () {
+        var alert = document.getElementById("alertSuccess");
+        alert.style.display = "block";
+        $timeout(hideAlertSuccess, 4000);
+
+    }
+    var hideAlertSuccess = function () {
+        var alert = document.getElementById("alertSuccess");
+        alert.style.display = "none";
+    }
+
+
 
 
     carregarAlunos();

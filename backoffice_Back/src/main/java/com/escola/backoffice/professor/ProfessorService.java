@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
 public class ProfessorService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TurmaService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProfessorService.class);
     private static final String ID_INEXISTENTE = "ID NÃO EXISTE: ";
     private final IProfessoreRepository iProfessoreRepository;
     private final ITurmaRepository iTurmaRepository;
@@ -29,7 +30,6 @@ public class ProfessorService {
                 professorDTO.getNome(),
                 this.iTurmaRepository.findAllTurmasByIds(professorDTO.getTurmas()),
                 professorDTO.getMateria()
-
         );
 
         professorSave = this.iProfessoreRepository.save(professorSave);
@@ -47,10 +47,11 @@ public class ProfessorService {
         iProfessoreRepository.findAll().forEach(professor -> professorDTOS.add(ProfessorDTO.of(professor)));
         return professorDTOS;
     }
-    public List<ProfessorDTO> findAllByTurma(Long idturma) {
+
+    public Set<ProfessorDTO> findAllByTurma(Long idturma) {
         LOGGER.info("Buscando todas as professores");
         Turma turma = this.turmaService.findById(idturma);
-        List<ProfessorDTO> professorDTOS =iProfessoreRepository.findAllByTurmas(turma);
+        Set<ProfessorDTO> professorDTOS = iProfessoreRepository.findAllByTurmas(turma);
         return professorDTOS;
     }
 

@@ -3,15 +3,15 @@ package com.escola.backoffice.aluno;
 import com.escola.backoffice.boletin.Boletim;
 import com.escola.backoffice.turma.Turma;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "aluno")
@@ -20,13 +20,19 @@ public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Getter
+    @Setter
     private Long id;
 
     @Column(name = "nome")
+    @Getter
+    @Setter
     private String nome;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_turma", referencedColumnName = "id")
+    @Getter
+    @Setter
     private Turma turma;
 
 
@@ -35,7 +41,9 @@ public class Aluno {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Boletim> boletins = generateBoletins();
+    @Getter
+    @Setter
+    private Set<Boletim> boletins = generateBoletins();
 
     public Aluno(Long id, String nome, Turma turma) {
         this.id = id;
@@ -43,8 +51,8 @@ public class Aluno {
         this.turma = turma;
     }
 
-    private List<Boletim> generateBoletins() {
-        List<Boletim> boletimList = new ArrayList<>();
+    private Set<Boletim> generateBoletins() {
+        Set<Boletim> boletimList = new HashSet<>();
         for (int i = 0; i < 4; i++) {
             Boletim b = new Boletim();
             b.setAluno(this);

@@ -76,5 +76,27 @@ angular.module("escola").controller("professorController", function ($scope, $ht
             $scope.carregarAlunosByTurma(turmid);
         });
     };
+
+    var showAlertId = function () {
+        var alert = document.getElementById("alertId");
+        alert.style.display = "block";
+        $timeout(hideAlertId, 4000);
+
+    }
+    var hideAlertId = function () {
+        var alert = document.getElementById("alertId");
+        alert.style.display = "none";
+    }
+
+    var showAlertSuccess = function () {
+        var alert = document.getElementById("alertSuccess");
+        alert.style.display = "block";
+        $timeout(hideAlertSuccess, 4000);
+
+    }
+    var hideAlertSuccess = function () {
+        var alert = document.getElementById("alertSuccess");
+        alert.style.display = "none";
+    }
     carregarTurmas();
 });

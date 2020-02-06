@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -40,7 +41,7 @@ public class AlunoService {
     }
 
 
-    public List<AlunoDTO> findAllByTurma(Long id){
+    public Set<AlunoDTO> findAllByTurma(Long id){
         LOGGER.info("Buscando todos os alunos pela turma: [{}]", id);
         Turma turma = turmaService.findById(id);
 
@@ -50,7 +51,7 @@ public class AlunoService {
     public AlunoDTO update(AlunoDTO alunoDTO, Long id){
         LOGGER.info("Executando update para aluno de ID: [{}]", id);
         Aluno alunoUpdate = this.findById(id);
-        if(AlunoDTO.of(alunoUpdate)!= alunoDTO){
+        if(!(AlunoDTO.of(alunoUpdate).equals(alunoDTO))){
             alunoUpdate.setNome(alunoDTO.getNome());
             alunoUpdate.getBoletins().clear();
             alunoUpdate.getBoletins().addAll(this.iBoletimRepository.findAllBoletimByIds(alunoDTO.getBoletins()));

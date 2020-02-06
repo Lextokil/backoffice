@@ -7,13 +7,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
+
 @Repository
 public interface IProfessoreRepository extends JpaRepository<Professor,Long> {
 
-    @Query(value = "SELECT a FROM Professor a WHERE id in:ids ")
-    List<Professor> findAllProfessorByIds(@Param("ids")List<Long> ids);
+    @Query(value = "SELECT a FROM Professor a WHERE a.id in :ids ")
+    Set<Professor> findAllProfessorByIds(@Param("ids")List<Long> ids);
 
-    List<ProfessorDTO> findAllByTurmas(Turma id);
+    Set<ProfessorDTO> findAllByTurmas(Turma id);
 
 
 }

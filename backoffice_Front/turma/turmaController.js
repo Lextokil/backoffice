@@ -1,14 +1,65 @@
 angular.module("escola").controller("turmaController", function ($scope, $http) {
-    $scope.app = "Professores";
-    $scope.professores = [];
+    $scope.app = "Turmas";
     $scope.turmas = [];
-    $scope.materias = ["MATEMATICA", "GEOGRAFIA", "HISTORIA", "BIOLOGIA", "FISICA", "QUIMICA"];
+    $scope.alunos = [];
+    $scope.professores = [];
+    $scope.turnos = ["VESPERTINO", "MATUTINO", "NOTURNO"];
 
-    var carregarTurmas = function () {
+
+    $scope.carregarTurmas = function () {
+
         $http.get("http://localhost:8080/turmas/all").then(function (data) {
             $scope.turmas = data.data;
         });
+
     };
+
+    var carregarAlunos = function () {
+        $http.get("http://localhost:8080/alunos/all").then(function (data) {
+            $scope.alunos = data.data;
+        });
+    };
+
+    var carregarProfessores = function () {
+        $http.get("http://localhost:8080/professores/all").then(function (data) {
+            $scope.professores = data.data;
+
+        });
+    };
+    $scope.adicionarAluno = function (turma) {
+        console.log(turma);
+        turma.alunos.push(null);
+
+    }
+    $scope.adicionarProfessor = function (turma) {
+        turma.professores.push(null);
+
+    }
+
+    $scope.adicionarAlunoAoArray = function (turma, aluno, index) {
+        turma.alunos.splice(index, 1, aluno);
+    }
+    $scope.adicionarProfessorAoArray = function (turma, professor, index) {
+        turma.professores.splice(index, 1, professor);
+        console.log(turma);
+    }
+    $scope.mostrarAlunos = function (index) {
+        let x = document.getElementsByClassName("divAlunos")[index];
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+    $scope.mostrarProfessores = function (index) {
+        var x = document.getElementsByClassName("divProf")[index];
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
 
     $scope.isEditable = function () {
         return condition;
@@ -22,59 +73,32 @@ angular.module("escola").controller("turmaController", function ($scope, $http) 
 
     };
 
-    $scope.carregarProfessoresByTurma = function (id) {
-
-        if (isNaN(id)) {
-            $http.get("http://localhost:8080/professores/all").then(function (data) {
-                $scope.professores = data.data;
-            });
-        } else {
-            $http.get("http://localhost:8080/professores/allByTurma/" + id).then(function (data) {
-                $scope.professores = data.data;
-            });
-        }
-
-    };
-    $scope.deletarProfessor = function (id, turmid) {
-        $http.delete("http://localhost:8080/professores/" + id).then(function (data, status) {
-            $scope.carregarProfessoresByTurma(turmid);
+    $scope.salvarTurmas = function (turmas, idTurma) {
+        condition = true;
+        $http.put("http://localhost:8080/turmas/updateAll/", turmas).then(function (data, status) {
+            $scope.carregarTurmas();
         });
-    };
 
-    $scope.adicionarTurma = function (professor) {
-        professor.turmas.push(null);
     };
+    $scope.cadastrarTurma = function (turma) {
+        condition = true;
+        $http.post("http://localhost:8080/turmas/", turma).then(function (data, status) {
+            $scope.carregarTurmas();
+        });
 
-    $scope.deletarTurma = function (professor, index) {
-        professor.turmas.splice(index, 1);
     };
-    $scope.adicionarTurmaAoArray = function (professor, turma, index) {
-        professor.turmas.splice(index, 1, turma);
+    $scope.deletarAluno = function (turma, index) {
+        turma.alunos.splice(index, 1);
+    };
+    $scope.deletarProfessores = function (turma, index) {s
+        turma.professores.splice(index, 1);
+    };
+    $scope.deletarTurma = function (idTurma){
+        $http.delete("http://localhost:8080/turmas/"+idTurma).then(function (data, status) {
+            $scope.carregarTurmas();
+        });
     }
 
-    $scope.cadastrarProfessor = function (professor, turma) {
-        condition = true;
-        professor.turmas = [turma.id];
-        console.log(professor);
-        $http.post("http://localhost:8080/professores/", professor).then(function (data, status) {
-            $scope.carregarProfessoresByTurma(turma.id);
-        });
-
-    };
-    $scope.salvarProfessores = function (professores, idTurma) {
-        condition = true;
-        console.log($scope.professores);
-        console.log(professores);
-        $http.put("http://localhost:8080/professores/updateAll/", professores).then(function (data, status) {
-            $scope.carregarProfessoresByTurma(idTurma);
-        });
-
-    };
-    $scope.deletarProfessor = function (id, turmid) {
-        $http.delete("http://localhost:8080/professores/" + id).then(function (data, status) {
-            console.log(id);
-            $scope.carregarAlunosByTurma(turmid);
-        });
-    };
-    carregarTurmas();
+    carregarAlunos();
+    carregarProfessores();
 });

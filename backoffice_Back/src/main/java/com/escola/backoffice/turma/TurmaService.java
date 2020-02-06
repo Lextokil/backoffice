@@ -39,20 +39,27 @@ public class TurmaService {
         return this.iTurmaRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(ID_INEXISTENTE + id));
     }
 
-    public List<TurmaDTO> findAll(){
+    public List<TurmaDTO> findAll() {
         LOGGER.info("Buscando todas as turmas");
-        List<TurmaDTO>turmas = new ArrayList<>();
+        List<TurmaDTO> turmas = new ArrayList<>();
         iTurmaRepository.findAll().forEach(turma -> turmas.add(TurmaDTO.of(turma)));
         return turmas;
     }
 
-    public TurmaDTO update(TurmaDTO turmaDTO, Long id){
+    public TurmaDTO update(TurmaDTO turmaDTO, Long id) {
         LOGGER.info("Executando update para turma de ID: [{}]", id);
         Turma turmaUpdate = this.findById(id);
-        turmaUpdate.setTurno(turmaDTO.getTurno());
-        turmaUpdate.setProfessores(this.iProfessoreRepository.findAllProfessorByIds(turmaDTO.getProfessores()));
-        turmaUpdate.setAlunos(this.iAlunoRepository.findAllAlunosByIds(turmaDTO.getAlunos()));
-        turmaUpdate = iTurmaRepository.save(turmaUpdate);
+        if (!(TurmaDTO.of(turmaUpdate).equals(turmaDTO))) {
+            turmaUpdate.setTurno(turmaDTO.getTurno());
+            turmaUpdate.getProfessores().clear();
+            turmaUpdate.getProfessores().addAll(this.iProfessoreRepository.findAllProfessorByIds(turmaDTO.getProfessores()));
+            turmaUpdate.getAlunos().clear();
+            turmaUpdate.getAlunos().addAll(this.iAlunoRepository.findAllAlunosByIds(turmaDTO.getAlunos()));
+            turmaUpdate = iTurmaRepository.save(turmaUpdate);
+        }else{
+            LOGGER.info("Não há nenhuma alteração para turma de ID: [{}]", id);
+        }
+
         return TurmaDTO.of(turmaUpdate);
     }
 
@@ -61,4 +68,9 @@ public class TurmaService {
         this.iTurmaRepository.deleteById(id);
     }
 
+    public List<TurmaDTO> updateAll(List<TurmaDTO> turmaDTO) {
+        List<TurmaDTO> turmaDTOList = new ArrayList<>();
+        turmaDTO.forEach(turmaDTO1 -> turmaDTOList.add(this.update(turmaDTO1, turmaDTO1.getId())));
+        return turmaDTOList;
+    }
 }

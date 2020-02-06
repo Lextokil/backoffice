@@ -4,40 +4,65 @@
         <table class="table table-striped ">
             <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Materia</th>
-                    <th>Turmas</th>
+                    <th>Id</th>
+                    <th>Turno</th>
+                    <th>Alunos</th>
+                    <th>Professores</th>
                     <th></th>
                     <th></th>
+
                 </tr>
             </thead>
             <tbody>
-                <tr ng-class="" ng-repeat="professor in professores">
-                    <td><input class="inputAluno" ng-model="professor.nome" type="text" ng-change="onChange(boletim)"
-                            ng-disabled="isEditable()" ng-value="professor.nome"></td">
-                    <td>
-                        <select class="form-control" ng-model="professor.materia" ng-disabled="isEditable()" required>
-                            <option ng-repeat="materia in materias" value="{{materia}}">{{materia}}</option>
-                        </select>
-                    </td>
+                <tr ng-class="" ng-repeat="turma in turmas track by $index">
+                    <td><input class="inputTurma" ng-model="turma.id" type="text" ng-change="onChange(boletim)"
+                            ng-disabled="isEditable()" ng-value="turma.id"></td">
 
+                    <td><select type="text" class="custom-select" ng-model="turma.turno"
+                        ng-change="adicionarAlunoAoArray(turma, a, $index)" ng-disabled="isEditable()"
+                        aria-describedby="basic-addon2"> 
+                        <option ng-repeat="turno in turnos" value="{{turno}}">{{turno}}</option>
+                    </select>
                     <td>
-                        <div class="input-group" ng-repeat="t in professor.turmas track by $index">
-                            <select type="text" class="custom-select" ng-model="t"
-                                ng-change="adicionarTurmaAoArray(professor, t, $index)" ng-disabled="isEditable()"
-                                aria-describedby="basic-addon2">
-                                <option ng-repeat="turma in turmas" ng-value="{{turma.id}}">{{turma.id}}</option>
-                            </select>
-                            <div class="input-group-append td">
-                                <button class="btn btn-outline-danger"  type="button"
-                                    ng-click="deletarTurma(professor, $index)">X</button>
+                        <button type="button" ng-click="mostrarAlunos($index)" style="margin-bottom: 3px;"
+                            class="btn btn-outline-secondary" fa-trash>Ver
+                            Alunos</button>
+                        <div class="divAlunos" style="display: none;">
+
+
+                            <div class="input-group" ng-repeat="a in turma.alunos track by $index">
+                                <select type="text" class="custom-select" ng-model="a"
+                                    ng-change="adicionarAlunoAoArray(turma, a, $index)" ng-disabled="true"
+                                    aria-describedby="basic-addon2">
+                                    <option ng-repeat="aluno in alunos" ng-value="{{aluno.id}}">{{aluno.id}}</option>
+                                </select>
+                                <div class="input-group-append td">
+                                    <button class="btn btn-outline-danger" type="button"
+                                        ng-click="deletarAluno(turma, $index)">X</button>
+                                </div>
                             </div>
                         </div>
                     </td>
-                    <td><button type="button" ng-click="adicionarTurma(professor)"  class="btn btn-outline-secondary"
-                            fa-trash>Add
-                            Turma</button></td>
-                    <td text-align: center;><button type="button" ng-click="deletarProfessor(professor.id, turma.id)"
+
+                    <td>
+                        <button type="button" ng-click="mostrarProfessores($index)" style="margin-bottom: 3px;"
+                            class="btn btn-outline-secondary" fa-trash>Ver
+                            Professores</button>
+
+                        <div class="divProf" style="display: none;">
+                            <div class="input-group" ng-repeat="prof in turma.professores track by $index">
+                                <select type="text" class="custom-select" ng-model="prof"
+                                    ng-change="adicionarProfessorAoArray(turma, prof, $index)"
+                                    ng-disabled="true" aria-describedby="basic-addon2">
+                                    <option ng-repeat="professor in professores" ng-value="{{professor.id}}">
+                                        {{professor.id}}</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </td>
+                    <td text-align: center;><button type="button" ng-click="deletarTurma(turma.id)"
                             class="btn btn-outline-danger" fa-trash>Delet</button></td>
                 </tr>
             </tbody>
@@ -49,30 +74,25 @@
 
     </form>
     <hr>
-    <div>
+    <div class="container">
 
-        <form name="boletimForm">
-            <input class="form-control" value="" placeholder="Nome do novo professor" ng-model="professor.nome">
-            <select class="form-control" ng-model="professor.materia"required>
-                <option value="">Selecione uma materia</option>
-                <option ng-repeat="materia in materias" value="{{materia}}">{{materia}}</option>
-            </select>
-            <select class="form-control" ng-model="turma" ng-options="turma.id for turma in turmas" required>
-                <option value="">Selecione a turma desejada</option>
-            </select>
-        </form>
-        <div style="margin-top: 20px;">
-            <a class="btn btn-white btn-animate" ng-click="carregarProfessoresByTurma(turma.id)"
-                style="margin-right: 5px;">Buscar</a>
-            <a class="btn btn-white btn-animate" ng-click="editable()" style="margin-right: 5px;">Editar</a>
-            <a class="btn btn-white btn-animate" ng-click="salvarProfessores(professores, turma.id)"
-                style="margin-right: 5px;">Salvar</a>
-            <a class="btn btn-white btn-animate" ng-click="cadastrarProfessor(professor, turma)"
-                style="margin-right: 5px;">Cadastrar</a>
-        </div>
+        <select class="form-control" ng-model="turma.turno" required>
+            <option value="">Selecione uma turno</option>
+            <option ng-repeat="turno in turnos" value="{{turno}}">{{turno}}</option>
+        </select>
 
 
     </div>
+
+    <div style="margin-top: 20px;">
+        <a class="btn btn-white btn-animate" ng-click="carregarTurmas(turma.id)" style="margin-right: 5px;">Buscar</a>
+        <a class="btn btn-white btn-animate" ng-click="editable()" style="margin-right: 5px;">Editar</a>
+        <a class="btn btn-white btn-animate" ng-click="salvarTurmas(turmas)" style="margin-right: 5px;">Salvar</a>
+        <a class="btn btn-white btn-animate" ng-click="cadastrarTurma(turma)" style="margin-right: 5px;">Cadastrar</a>
+    </div>
+
+
+
 
 </div>
 

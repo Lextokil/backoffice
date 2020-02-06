@@ -7,14 +7,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface IAlunoRepository extends JpaRepository<Aluno, Long> {
 
-    @Query(value = "SELECT a FROM Aluno a WHERE id in:ids ")
-    List<Aluno> findAllAlunosByIds(@Param("ids")List<Long> ids);
+    @Query(value = "SELECT a FROM Aluno a WHERE a.id in :ids ")
+    Set<Aluno> findAllAlunosByIds(@Param("ids")List<Long> ids);
 
 
-    List<AlunoDTO> findAllByTurma(Turma id);
+    Set<AlunoDTO> findAllByTurma(Turma id);
 
 }

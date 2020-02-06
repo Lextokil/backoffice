@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin(origins = {"http://localhost:5000"})
 @RestController
@@ -37,7 +38,7 @@ public class AlunoRest {
     }
 
     @GetMapping("/allByTurma/{id}")
-    public List<AlunoDTO> findAllTurmas(@PathVariable("id") Long id) {
+    public Set<AlunoDTO> findAllTurmas(@PathVariable("id") Long id) {
         LOGGER.info("Buscando alunos pelo id da turma:[{}]", id);
         return alunoService.findAllByTurma(id);
     }

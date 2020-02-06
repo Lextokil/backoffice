@@ -1,7 +1,6 @@
 package com.escola.backoffice.materianota;
 
 import com.escola.backoffice.boletin.Boletim;
-import com.escola.backoffice.util.Materia;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

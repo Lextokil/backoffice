@@ -1,5 +1,6 @@
 <div class="jumbotron">
     <h3>{{app}}</h3>
+    
     <form name="boletimForm">
         <select class="form-control" ng-model="aluno" ng-options="aluno.nome for aluno in alunos" required>
             <option value="">Selecione o aluno desejado</option>
@@ -44,6 +45,13 @@
             <a class="btn btn-white btn-animate" ng-click="exportarBoletim(aluno.id);">Exportar</a>
             <a class="btn btn-white btn-animate" ng-click="salvarBoletins(boletins, aluno.id)">Salvar</a>
         </div>
+        <hr>
+        <div class="alert alert-danger" id="alertId"  role="alert">
+            Selecione um aluno !  
+          </div>
+          <div class="alert alert-success" id="alertSuccess" role="alert">
+            Sucesso ao exportar boletim!
+          </div>
 
     <hr>
 
