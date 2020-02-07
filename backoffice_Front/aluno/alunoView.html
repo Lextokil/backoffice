@@ -13,11 +13,11 @@
             <tbody>
                 <tr ng-class="" ng-repeat="aluno in alunos">
 
-                    <td><input class="inputAluno" ng-model="aluno.nome" type="text" ng-change="onChange(boletim)"
+                    <td><input class="inputTurma" ng-model="aluno.nome" type="text" ng-change="onChange(boletim)"
                             ng-disabled="isEditable()" value="{{aluno.nome}}"></td>
-                    <td><input class="inputAluno" ng-model="turno" type="text" ng-change="onChange(boletim)"
+                    <td><input class="inputTurma" ng-model="turno" type="text" ng-change="onChange(boletim)"
                             ng-disabled="true" ng-value="turnoDoAluno(aluno.turma)"></td>
-                    <td><select class="form-control" ng-model="aluno.turma" ng-disabled="isEditable()" required>
+                    <td><select class="custom-select" ng-model="aluno.turma" ng-disabled="isEditable()" required>
                             <option ng-repeat="turma in turmas" ng-value="{{turma.id}}">{{turma.id}}</option>
                         </select></td>
                     <td><button type="button" ng-click="deletarAluno(aluno.id, turma.id)"
@@ -43,20 +43,23 @@
             </select>
         </form>
         <div style="margin-top: 20px;">
-            <a class="btn btn-white btn-animate" ng-click="carregarAlunosByTurma(turma.id)"
-                style="margin-right: 5px;">Buscar</a>
-            <a class="btn btn-white btn-animate" ng-click="editable()" style="margin-right: 5px;">Editar</a>
-            <a class="btn btn-white btn-animate" ng-click="salvarAlunos(alunos, turma.id)"
-                style="margin-right: 5px;">Salvar</a>
+            <button class="btn btn-white" ng-click="carregarAlunosByTurma(turma.id)"
+                style="margin-right: 5px;">Buscar</button>
+            <button class="btn btn-white" ng-click="editable()" style="margin-right: 5px;">Editar</button>
+            <button class="btn btn-white" ng-click="salvarAlunos(alunos, turma.id)"
+                style="margin-right: 5px;">Salvar</button>
 
-            <a ng-click="cadastrarAluno(aluno, turma)" class="btn btn-white btn-animate">Cadastrar</a>
+            <button ng-click="cadastrarAluno(aluno, turma)" class="btn btn-white btn-animate">Cadastrar</button>
 
         </div>
 
 
     </div>
-
-</div>
-
+    <div class="alert alert-danger" id="alertId" role="alert">
+        {{messageAlert}}
+    </div>
+    <div class="alert alert-success" id="alertSuccess" role="alert">
+        {{messageSuccess}}
+    </div>
 
 </div>

@@ -1,4 +1,4 @@
-angular.module("escola").controller("professorController", function ($scope, $http) {
+angular.module("escola").controller("professorController", function ($scope, $http, alertService) {
     $scope.app = "Professores";
     $scope.professores = [];
     $scope.turmas = [];
@@ -7,7 +7,9 @@ angular.module("escola").controller("professorController", function ($scope, $ht
     var carregarTurmas = function () {
         $http.get("http://localhost:8080/turmas/all").then(function (data) {
             $scope.turmas = data.data;
-        });
+        }).catch(function(status, response){
+            alertService.showAlertId($scope,"Ops, ocorreu algum problema")
+        });;
     };
 
     $scope.isEditable = function () {
@@ -27,18 +29,24 @@ angular.module("escola").controller("professorController", function ($scope, $ht
         if (isNaN(id)) {
             $http.get("http://localhost:8080/professores/all").then(function (data) {
                 $scope.professores = data.data;
-            });
+            }).catch(function(status, response){
+                alertService.showAlertId($scope,"Ops, ocorreu algum problema")
+            });;
         } else {
             $http.get("http://localhost:8080/professores/allByTurma/" + id).then(function (data) {
                 $scope.professores = data.data;
-            });
+            }).catch(function(status, response){
+                alertService.showAlertId($scope,"Ops, ocorreu algum problema")
+            });;
         }
 
     };
     $scope.deletarProfessor = function (id, turmid) {
         $http.delete("http://localhost:8080/professores/" + id).then(function (data, status) {
             $scope.carregarProfessoresByTurma(turmid);
-        });
+        }).catch(function(status, response){
+            alertService.showAlertId($scope,"Ops, ocorreu algum problema")
+        });;
     };
 
     $scope.adicionarTurma = function (professor) {
@@ -53,50 +61,32 @@ angular.module("escola").controller("professorController", function ($scope, $ht
     }
 
     $scope.cadastrarProfessor = function (professor, turma) {
-        condition = true;
-        professor.turmas = [turma.id];
+        condition = true;        
         console.log(professor);
-        $http.post("http://localhost:8080/professores/", professor).then(function (data, status) {
-            $scope.carregarProfessoresByTurma(turma.id);
-        });
+        if(!turma || !professor.nome || !professor.materia){            
+            alertService.showAlertId($scope, "Por favor preencha todos os campos");
+        }else{
+            professor.turmas = [turma.id];
+            $http.post("http://localhost:8080/professores/", professor).then(function (data, status) {
+                $scope.carregarProfessoresByTurma(turma.id);
+                alertService.showAlertSuccess($scope, "Sucesso ao cadastrar professor");
+            }).catch(function(status, response){
+                alertService.showAlertId($scope,"Ops, ocorreu algum problema")
+            });;
+        }
 
     };
     $scope.salvarProfessores = function (professores, idTurma) {
         condition = true;
-        console.log($scope.professores);
-        console.log(professores);
         $http.put("http://localhost:8080/professores/updateAll/", professores).then(function (data, status) {
             $scope.carregarProfessoresByTurma(idTurma);
-        });
+            alertService.showAlertSuccess($scope, "Sucesso ao salvar os professores");
+        }).catch(function(status, response){
+            alertService.showAlertId($scope,"Ops, ocorreu algum problema")
+        });;
 
     };
-    $scope.deletarProfessor = function (id, turmid) {
-        $http.delete("http://localhost:8080/professores/" + id).then(function (data, status) {
-            console.log(id);
-            $scope.carregarAlunosByTurma(turmid);
-        });
-    };
 
-    var showAlertId = function () {
-        var alert = document.getElementById("alertId");
-        alert.style.display = "block";
-        $timeout(hideAlertId, 4000);
-
-    }
-    var hideAlertId = function () {
-        var alert = document.getElementById("alertId");
-        alert.style.display = "none";
-    }
-
-    var showAlertSuccess = function () {
-        var alert = document.getElementById("alertSuccess");
-        alert.style.display = "block";
-        $timeout(hideAlertSuccess, 4000);
-
-    }
-    var hideAlertSuccess = function () {
-        var alert = document.getElementById("alertSuccess");
-        alert.style.display = "none";
-    }
+   
     carregarTurmas();
 });

@@ -1,6 +1,5 @@
 package com.escola.backoffice.boletin;
 
-import javafx.application.Preloader;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

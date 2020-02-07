@@ -62,22 +62,22 @@
             </select>
         </form>
         <div style="margin-top: 20px;">
-            <a class="btn btn-white btn-animate" ng-click="carregarProfessoresByTurma(turma.id)"
-                style="margin-right: 5px;">Buscar</a>
-            <a class="btn btn-white btn-animate" ng-click="editable()" style="margin-right: 5px;">Editar</a>
-            <a class="btn btn-white btn-animate" ng-click="salvarProfessores(professores, turma.id)"
-                style="margin-right: 5px;">Salvar</a>
-            <a class="btn btn-white btn-animate" ng-click="cadastrarProfessor(professor, turma)"
-                style="margin-right: 5px;">Cadastrar</a>
+            <button class="btn btn-white " ng-click="carregarProfessoresByTurma(turma.id)"
+                style="margin-right: 5px;">Buscar</button>
+            <button class="btn btn-white " ng-click="editable()" style="margin-right: 5px;">Editar</button>
+            <button class="btn btn-white " ng-click="salvarProfessores(professores, turma.id)"
+                style="margin-right: 5px;">Salvar</button>
+            <button class="btn btn-white " ng-click="cadastrarProfessor(professor, turma)"
+                style="margin-right: 5px;">Cadastrar</button>
         </div>
 
 
     </div>
     <div class="alert alert-danger" id="alertId"  role="alert">
-        Por favor preencha todos os campos!   
+        {{messageAlert}}   
       </div>
       <div class="alert alert-success" id="alertSuccess" role="alert">
-        Sucesso ao exportar boletim!
+        {{messageSuccess}}
       </div>
 
 </div>

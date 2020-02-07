@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class TurmaDTO {
 
     private Long id;
-    
+
     @Size(max = 15, message = "O Turno não pode conter mais de 15 caracteres.")
     @NotNull(message = "O turno não pode ser nulo.")
     @NotBlank(message = "O turno pode estar em branco.")
@@ -31,8 +31,8 @@ public class TurmaDTO {
     private List<Long> alunos;
 
     private List<Long> professores;
-    
-    public static TurmaDTO of(Turma turma){
+
+    public static TurmaDTO of(Turma turma) {
         List<Long> professores = turma.getProfessores().stream().map(Professor::getId).collect(Collectors.toList());
         List<Long> alunos = turma.getAlunos().stream().map(Aluno::getId).collect(Collectors.toList());
         return new TurmaDTO(
@@ -41,5 +41,5 @@ public class TurmaDTO {
                 alunos,
                 professores);
     }
-    
+
 }

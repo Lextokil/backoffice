@@ -51,8 +51,7 @@ public class ProfessorService {
     public Set<ProfessorDTO> findAllByTurma(Long idturma) {
         LOGGER.info("Buscando todas as professores");
         Turma turma = this.turmaService.findById(idturma);
-        Set<ProfessorDTO> professorDTOS = iProfessoreRepository.findAllByTurmas(turma);
-        return professorDTOS;
+        return iProfessoreRepository.findAllByTurmas(turma);
     }
 
     public ProfessorDTO update(ProfessorDTO professorDTO, Long id) {
@@ -61,7 +60,8 @@ public class ProfessorService {
         if (!(ProfessorDTO.of(professorUpdate).equals(professorDTO))) {
             professorUpdate.setMateria(professorDTO.getMateria());
             professorUpdate.setNome(professorDTO.getNome());
-            professorUpdate.setTurmas(this.iTurmaRepository.findAllTurmasByIds(professorDTO.getTurmas()));
+            professorUpdate.getTurmas().clear();
+            professorUpdate.getTurmas().addAll(this.iTurmaRepository.findAllTurmasByIds(professorDTO.getTurmas()));
             professorUpdate = iProfessoreRepository.save(professorUpdate);
         }
 

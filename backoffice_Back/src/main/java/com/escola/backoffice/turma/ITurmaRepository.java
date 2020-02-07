@@ -6,9 +6,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
+
 @Repository
 public interface ITurmaRepository extends JpaRepository<Turma, Long> {
 
     @Query(value = "SELECT t FROM Turma t WHERE t.id in :ids")
-    List<Turma> findAllTurmasByIds(@Param("ids")List<Long> ids);
+    Set<Turma> findAllTurmasByIds(@Param("ids") List<Long> ids);
 }

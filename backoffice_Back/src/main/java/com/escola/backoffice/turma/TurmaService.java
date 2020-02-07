@@ -1,14 +1,19 @@
 package com.escola.backoffice.turma;
 
+import com.escola.backoffice.aluno.Aluno;
 import com.escola.backoffice.aluno.IAlunoRepository;
 import com.escola.backoffice.professor.IProfessoreRepository;
+import com.escola.backoffice.professor.Professor;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -45,18 +50,35 @@ public class TurmaService {
         iTurmaRepository.findAll().forEach(turma -> turmas.add(TurmaDTO.of(turma)));
         return turmas;
     }
-
+    @Transactional
     public TurmaDTO update(TurmaDTO turmaDTO, Long id) {
         LOGGER.info("Executando update para turma de ID: [{}]", id);
         Turma turmaUpdate = this.findById(id);
+        Turma finalTurmaUpdate = turmaUpdate;
+        List<Aluno> alunos1 = new ArrayList<>();
+        turmaUpdate.getProfessores().stream().forEach(professor -> {
+            if (!turmaDTO.getProfessores().contains(professor.getId())) {
+                professor.getTurmas().remove(finalTurmaUpdate);
+            }
+        });
+//        turmaUpdate.getAlunos().stream().forEach(aluno -> {
+//            if (!turmaDTO.getAlunos().contains(aluno.getId())) {
+//                aluno.setTurma(new Turma());
+//                alunos1.add(aluno);
+//            }
+//        });
         if (!(TurmaDTO.of(turmaUpdate).equals(turmaDTO))) {
             turmaUpdate.setTurno(turmaDTO.getTurno());
             turmaUpdate.getProfessores().clear();
-            turmaUpdate.getProfessores().addAll(this.iProfessoreRepository.findAllProfessorByIds(turmaDTO.getProfessores()));
+            Set<Professor> professores = this.iProfessoreRepository.findAllProfessorByIds(turmaDTO.getProfessores());
+            professores.stream().forEach(professor -> professor.getTurmas().add(finalTurmaUpdate));
+            turmaUpdate.getProfessores().addAll(professores);
             turmaUpdate.getAlunos().clear();
-            turmaUpdate.getAlunos().addAll(this.iAlunoRepository.findAllAlunosByIds(turmaDTO.getAlunos()));
+            Set<Aluno> alunos = this.iAlunoRepository.findAllAlunosByIds(turmaDTO.getAlunos());
+            alunos.stream().forEach(aluno -> aluno.setTurma(finalTurmaUpdate));
+            turmaUpdate.getAlunos().addAll(alunos);
             turmaUpdate = iTurmaRepository.save(turmaUpdate);
-        }else{
+        } else {
             LOGGER.info("Não há nenhuma alteração para turma de ID: [{}]", id);
         }
 

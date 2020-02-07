@@ -1,4 +1,4 @@
-angular.module("escola").controller("turmaController", function ($scope, $http) {
+angular.module("escola").controller("turmaController", function ($scope, $http, alertService) {
     $scope.app = "Turmas";
     $scope.turmas = [];
     $scope.alunos = [];
@@ -10,6 +10,8 @@ angular.module("escola").controller("turmaController", function ($scope, $http) 
 
         $http.get("http://localhost:8080/turmas/all").then(function (data) {
             $scope.turmas = data.data;
+        }).catch(function (status, response) {
+            alertService.showAlertId($scope, "Ops, ocorreu algum problema ao carregar as turmas")
         });
 
     };
@@ -17,13 +19,16 @@ angular.module("escola").controller("turmaController", function ($scope, $http) 
     var carregarAlunos = function () {
         $http.get("http://localhost:8080/alunos/all").then(function (data) {
             $scope.alunos = data.data;
+        }).catch(function (status, response) {
+            alertService.showAlertId($scope, "Ops, ocorreu algum problema ao carregar os alunos")
         });
     };
 
     var carregarProfessores = function () {
         $http.get("http://localhost:8080/professores/all").then(function (data) {
             $scope.professores = data.data;
-
+        }).catch(function (status, response) {
+            alertService.showAlertId($scope, "Ops, ocorreu algum problema ao carregar os professores")
         });
     };
     $scope.adicionarAluno = function (turma) {
@@ -77,6 +82,10 @@ angular.module("escola").controller("turmaController", function ($scope, $http) 
         condition = true;
         $http.put("http://localhost:8080/turmas/updateAll/", turmas).then(function (data, status) {
             $scope.carregarTurmas();
+            carregarAlunos();
+            alertService.showAlertSuccess($scope, "Turma salva com sucesso!")
+        }).catch(function (status, response) {
+            alertService.showAlertId($scope, "Ops, ocorreu algum problema")
         });
 
     };
@@ -84,18 +93,27 @@ angular.module("escola").controller("turmaController", function ($scope, $http) 
         condition = true;
         $http.post("http://localhost:8080/turmas/", turma).then(function (data, status) {
             $scope.carregarTurmas();
+            alertService.showAlertSuccess($scope, "Turma cadastrada com sucesso!")
+        }).catch(function (status, response) {
+            alertService.showAlertId($scope, "Ops, ocorreu algum problema")
         });
 
     };
     $scope.deletarAluno = function (turma, index) {
         turma.alunos.splice(index, 1);
     };
-    $scope.deletarProfessores = function (turma, index) {s
+
+    $scope.removerProfessore = function (turma, index) {
+        console.log(turma);
         turma.professores.splice(index, 1);
+        console.log(turma);
     };
     $scope.deletarTurma = function (idTurma){
         $http.delete("http://localhost:8080/turmas/"+idTurma).then(function (data, status) {
             $scope.carregarTurmas();
+            alertService.showAlertSuccess($scope, "Turma deletada!")
+        }).catch(function (status, response) {
+            alertService.showAlertId($scope, "Ops, ocorreu algum problema")
         });
     }
 

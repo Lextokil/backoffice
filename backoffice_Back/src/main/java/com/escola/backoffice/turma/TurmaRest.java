@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @CrossOrigin(origins = {"http://localhost:5000"})
 @RestController
@@ -22,7 +21,7 @@ public class TurmaRest {
     }
 
     @PostMapping
-    public TurmaDTO save(@RequestBody TurmaDTO turmaDTO){
+    public TurmaDTO save(@RequestBody TurmaDTO turmaDTO) {
         LOGGER.info("Recebendo solicitação de persistência para turma...");
         LOGGER.debug("Payload: {}", turmaDTO);
         return this.turmaService.save(turmaDTO);
@@ -37,7 +36,7 @@ public class TurmaRest {
     }
 
     @GetMapping("/all")
-    public List<TurmaDTO> findAllTurmas(){
+    public List<TurmaDTO> findAllTurmas() {
         return turmaService.findAll();
     }
 
@@ -48,6 +47,7 @@ public class TurmaRest {
 
         return this.turmaService.update(turmaDTO, id);
     }
+
     @PutMapping("/updateAll")
     public List<TurmaDTO> udpateAll(@RequestBody List<TurmaDTO> turmaDTO) {
         LOGGER.info("Recebendo Update All para turmas");

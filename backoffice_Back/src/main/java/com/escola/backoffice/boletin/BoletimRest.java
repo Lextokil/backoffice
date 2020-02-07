@@ -60,6 +60,7 @@ public class BoletimRest {
 
         return this.boletimService.update(boletimDTO, id);
     }
+
     @PutMapping("/updateAll/{idAluno}")
     public List<BoletimDTO> udpateAllByAluno(@PathVariable("idAluno") Long idAluno, @RequestBody List<BoletimCompleto> boletimDTOS) {
         LOGGER.info("Recebendo Update all by aluno");

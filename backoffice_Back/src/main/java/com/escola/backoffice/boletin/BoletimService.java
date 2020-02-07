@@ -47,9 +47,9 @@ public class BoletimService {
     public BoletimDTO update(BoletimDTO boletimDTO, Long id) {
         LOGGER.info("Executando update para boletim de ID: [{}]", id);
         Boletim boletimUpdate = this.findById(id);
-        Collections.replaceAll(boletimDTO.getMateriaNotas(),null, 0.0);
+        Collections.replaceAll(boletimDTO.getMateriaNotas(), null, 0.0);
         for (int i = 0; i < boletimUpdate.getMateriaNotas().size(); i++) {
-            if (boletimDTO.getMateriaNotas().get(i) < 0 ) {
+            if (boletimDTO.getMateriaNotas().get(i) < 0) {
                 boletimDTO.getMateriaNotas().set(i, 0.00);
             }
             if (boletimDTO.getMateriaNotas().get(i) > 10) {

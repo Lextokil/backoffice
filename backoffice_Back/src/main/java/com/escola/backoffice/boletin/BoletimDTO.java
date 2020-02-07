@@ -27,7 +27,7 @@ public class BoletimDTO {
     private List<Double> materiaNotas = new ArrayList<>();
 
 
-    public static BoletimDTO of(Boletim boletim){
+    public static BoletimDTO of(Boletim boletim) {
         List<Double> materiaNotas = boletim.getMateriaNotas().stream().map(MateriaNota::getNota).collect(Collectors.toList());
         List<String> materias = boletim.getMateriaNotas().stream().map(MateriaNota::getMateria).collect(Collectors.toList());
         return new BoletimDTO(

@@ -16,7 +16,7 @@
             <tbody>
                 <tr ng-class="" ng-repeat="turma in turmas track by $index">
                     <td><input class="inputTurma" ng-model="turma.id" type="text" ng-change="onChange(boletim)"
-                            ng-disabled="isEditable()" ng-value="turma.id"></td">
+                            ng-disabled="true" ng-value="turma.id"></td">
 
                     <td><select type="text" class="custom-select" ng-model="turma.turno"
                         ng-change="adicionarAlunoAoArray(turma, a, $index)" ng-disabled="isEditable()"
@@ -25,14 +25,14 @@
                     </select>
                     <td>
                         <button type="button" ng-click="mostrarAlunos($index)" style="margin-bottom: 3px;"
-                            class="btn btn-outline-secondary" fa-trash>Ver
+                            class="btn btn-white" fa-trash>Ver
                             Alunos</button>
                         <div class="divAlunos" style="display: none;">
 
 
                             <div class="input-group" ng-repeat="a in turma.alunos track by $index">
                                 <select type="text" class="custom-select" ng-model="a"
-                                    ng-change="adicionarAlunoAoArray(turma, a, $index)" ng-disabled="true"
+                                    ng-change="adicionarAlunoAoArray(turma, a, $index)" ng-disabled="isEditable()"
                                     aria-describedby="basic-addon2">
                                     <option ng-repeat="aluno in alunos" ng-value="{{aluno.id}}">{{aluno.id}}</option>
                                 </select>
@@ -41,24 +41,36 @@
                                         ng-click="deletarAluno(turma, $index)">X</button>
                                 </div>
                             </div>
+                            
+                            <button type="button" ng-click="adicionarAluno(turma)" style="margin-bottom: 3px;"
+                            class="btn btn-white" fa-trash>Add
+                            Aluno</button>
                         </div>
                     </td>
 
                     <td>
                         <button type="button" ng-click="mostrarProfessores($index)" style="margin-bottom: 3px;"
-                            class="btn btn-outline-secondary" fa-trash>Ver
+                            class="btn btn-white" fa-trash>Ver
                             Professores</button>
 
                         <div class="divProf" style="display: none;">
                             <div class="input-group" ng-repeat="prof in turma.professores track by $index">
                                 <select type="text" class="custom-select" ng-model="prof"
                                     ng-change="adicionarProfessorAoArray(turma, prof, $index)"
-                                    ng-disabled="true" aria-describedby="basic-addon2">
+                                    ng-disabled="isEditable()" aria-describedby="basic-addon2">
                                     <option ng-repeat="professor in professores" ng-value="{{professor.id}}">
                                         {{professor.id}}</option>
                                 </select>
+                                <div class="input-group-append td">
+                                    <button class="btn btn-outline-danger" type="button"
+                                        ng-click="removerProfessore(turma, $index)">X</button>
+                                </div>
+    
                             </div>
-
+                            <button type="button" ng-click="adicionarProfessor(turma)" style="margin-bottom: 3px;"
+                            class="btn btn-white" fa-trash>Add
+                            Professor</button>
+                            
 
                         </div>
                     </td>
@@ -85,13 +97,18 @@
     </div>
 
     <div style="margin-top: 20px;">
-        <a class="btn btn-white btn-animate" ng-click="carregarTurmas(turma.id)" style="margin-right: 5px;">Buscar</a>
-        <a class="btn btn-white btn-animate" ng-click="editable()" style="margin-right: 5px;">Editar</a>
-        <a class="btn btn-white btn-animate" ng-click="salvarTurmas(turmas)" style="margin-right: 5px;">Salvar</a>
-        <a class="btn btn-white btn-animate" ng-click="cadastrarTurma(turma)" style="margin-right: 5px;">Cadastrar</a>
+        <button class="btn btn-white" ng-click="carregarTurmas(turma.id)" style="margin-right: 5px;">Buscar</button>
+        <button class="btn btn-white" ng-click="editable()" style="margin-right: 5px;">Editar</button>
+        <button class="btn btn-white" ng-click="salvarTurmas(turmas)" style="margin-right: 5px;">Salvar</button>
+        <button class="btn btn-white" ng-click="cadastrarTurma(turma)" style="margin-right: 5px;">Cadastrar</button>
     </div>
 
-
+    <div class="alert alert-danger" id="alertId" role="alert">
+        {{messageAlert}}
+    </div>
+    <div class="alert alert-success" id="alertSuccess" role="alert">
+        {{messageSuccess}}
+    </div>
 
 
 </div>

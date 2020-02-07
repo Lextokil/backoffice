@@ -1,9 +1,7 @@
 package com.escola.backoffice.aluno;
 
 import com.escola.backoffice.boletin.Boletim;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,9 +11,10 @@ import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class AlunoDTO {
 
     private Long id;
@@ -39,6 +38,7 @@ public class AlunoDTO {
     public static AlunoDTO of(Aluno aluno){
         List<Long> boletins = aluno.getBoletins().stream()
                 .map(Boletim::getId).collect(Collectors.toList());
+
         return new AlunoDTO(
                 aluno.getId(),
                 aluno.getNome(),

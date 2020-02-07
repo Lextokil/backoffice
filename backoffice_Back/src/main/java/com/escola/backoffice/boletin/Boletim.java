@@ -3,11 +3,15 @@ package com.escola.backoffice.boletin;
 import com.escola.backoffice.aluno.Aluno;
 import com.escola.backoffice.materianota.MateriaNota;
 import com.escola.backoffice.util.Materia;
-import lombok.*;
-import org.springframework.stereotype.Service;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -19,12 +23,14 @@ public class Boletim {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @Getter @Setter
-    private  Long id;
+    @Getter
+    @Setter
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_aluno", referencedColumnName = "id")
-    @Getter @Setter
+    @Getter
+    @Setter
     private Aluno aluno;
 
     @OneToMany(
@@ -32,7 +38,8 @@ public class Boletim {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @Getter @Setter
+    @Getter
+    @Setter
     private List<MateriaNota> materiaNotas = generateMaterias();
 
     public Boletim(Long id, Aluno aluno) {
@@ -41,7 +48,7 @@ public class Boletim {
 
     }
 
-    private List<MateriaNota> generateMaterias(){
+    private List<MateriaNota> generateMaterias() {
         List<MateriaNota> materiaList = new ArrayList<>();
         EnumSet.allOf(Materia.class).forEach(materia -> materiaList.add(new MateriaNota(materia.getDescricao(), 0.0, this)));
         return materiaList;
