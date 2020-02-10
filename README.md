@@ -3,24 +3,23 @@ projeto com intuito de estudo, simulando um pequeno sistema de escola com cadast
 
 
 **Pré-Requisitos:**
-#Markdown
-*Java 8*
-*Docker*
-*sql-server*
-*angularjs-1.7.9*
-*Node.js*
+- *Java 8*
+- *Docker*
+- *sql-server*
+- *angularjs-1.7.9*
+- *Node.js*
 
 **Inicialização**
--Setar as variaves necessárias nas variaves de ambiente do sistema;
--Subir o docker com uma imagem com o comando **docker-compose up**;
--Criar um server local para o **front** com os comandos **npm install serve** para instalar e **serve** para iniciar;
+- Setar as variaves necessárias nas variaves de ambiente do sistema;
+- Subir o docker com uma imagem com o comando **docker-compose up**;
+- Criar um server local para o **front** com os comandos **npm install serve** para instalar e **serve** para iniciar;
 
 **Ordem cronológica a ser seguida**
--Cadastrar uma turma
--Cadastrar alunos ou professores
--Alterar notas do boletim dos alunos cadastrados
--Exportar boletins
+- Cadastrar uma turma
+- Cadastrar alunos ou professores
+- Alterar notas do boletim dos alunos cadastrados
+- Exportar boletins
 
-**OBS**
+**OBS:**
 *A fim de estudo sobre css e angularjs o design está fora dos padrões comerciais.*
 
