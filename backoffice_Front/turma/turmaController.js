@@ -113,7 +113,7 @@ angular.module("escola").controller("turmaController", function ($scope, $http, 
             $scope.carregarTurmas();
             alertService.showAlertSuccess($scope, "Turma deletada!")
         }).catch(function (status, response) {
-            alertService.showAlertId($scope, "Ops, ocorreu algum problema")
+            alertService.showAlertId($scope, "Não é possivel deletar uma turma que tem alunos ou professores")
         });
     }
 

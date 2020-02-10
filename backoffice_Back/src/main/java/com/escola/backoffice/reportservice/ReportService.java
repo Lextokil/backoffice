@@ -28,7 +28,11 @@ public class ReportService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportService.class);
 
-    public void exportReport(HttpServletResponse response, Long id) throws JRException, IOException {
+    public ReportService(BoletimService boletimService) {
+        this.boletimService = boletimService;
+    }
+
+    public void exportReport(HttpServletResponse response, Long id) throws JRException {
         try {
             String fileName = "Boletim" + id + ".pdf";
             response.setContentType("application/pdf");

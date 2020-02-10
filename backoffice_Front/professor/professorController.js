@@ -86,6 +86,14 @@ angular.module("escola").controller("professorController", function ($scope, $ht
         });;
 
     };
+    $scope.mostrarProfessores = function (index) {
+        let x = document.getElementsByClassName("divProf")[index];
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
 
    
     carregarTurmas();

@@ -71,7 +71,7 @@ public class ProfessorService {
 
     public void delete(Long id) {
         LOGGER.info("Executando delete para professor de ID: [{}]", id);
-        this.iTurmaRepository.deleteById(id);
+        this.iProfessoreRepository.deleteById(id);
     }
 
     public List<ProfessorDTO> updateAll(List<ProfessorDTO> professorDTOS) {

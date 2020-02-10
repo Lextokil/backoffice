@@ -1,11 +1,12 @@
 .jumbotron {
-    width: 900px;
+    width: 75%;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
     background: rgb(7, 6, 6, 0.4);
     border-style: solid;
+    border-color: rgba(255, 255, 255, 0.404);
 }
 h3{
   color: white;
@@ -20,7 +21,7 @@ h3{
     color: white;
 }
 .form-control :active{
-  background-color: none;
+  background: none;
   color: white;
 }
 
@@ -33,6 +34,10 @@ h3{
     width: 60px;
     background: none;
   }
+  .input, :disabled{
+    color: white;
+  }
+  
 header-fixed {
     width: 100% 
 }
@@ -43,6 +48,9 @@ header-fixed {
   
     width: max-content;
     text-align: center;
+    background: none;
+}
+.inputAluno, textarea{
 }
 .input, textarea{
   background: none;
@@ -51,6 +59,10 @@ header-fixed {
 .inputTurma, textarea{
   background: none;
   color: white;
+}
+.input-group{
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 .inputTurma{  
@@ -104,6 +116,7 @@ body {
     -webkit-transform: translateY(-3px);
             transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    color: rgba(131, 211, 248, 0.897);
   }
   
   .btn:active {
@@ -146,13 +159,6 @@ body {
             animation: moveInBottom 5s ease-out;
     -webkit-animation-fill-mode: backwards;
             animation-fill-mode: backwards;
-  }
-  
-  @-webkit-keyframes moveInBottom {
-    0% {
-      opacity: 0;
-      -webkit-transform: tr
-    }
   }
 .tableFixHead          { overflow-y: auto; height: 350px; }
 .tableFixHead thead th { position: sticky; top: 0; z-index: 10; color: white; }
@@ -200,6 +206,50 @@ select option{
 .nav{
   background: black;
   color:white;
+}
+
+.test{
+  margin-top: 40px;  
+  font-size: 60px;
+  text-align: center;
+  color: aliceblue;
+  font-style: italic;
+  font-family: fantasy, sans-serif;
+
+  -webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
+     -moz-animation: fadein 3s; /* Firefox < 16 */
+      -ms-animation: fadein 3s; /* Internet Explorer */
+       -o-animation: fadein 3s; /* Opera < 12.1 */
+          animation: fadein 3s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 
