@@ -30,9 +30,9 @@ public class ReportService {
 
     public void exportReport(HttpServletResponse response, Long id) throws JRException, IOException {
         try {
-            String path = "Boletim" + id + ".pdf";
+            String fileName = "Boletim" + id + ".pdf";
             response.setContentType("application/pdf");
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + path + "\"");
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"");
             OutputStream out = response.getOutputStream();
             List<BoletimCompleto> boletinsDoAluno = boletimService.getBoletimCompletoAluno(id);
             File file = ResourceUtils.getFile("classpath:boletim1.jrxml");

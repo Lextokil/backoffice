@@ -1,11 +1,10 @@
 angular.module("escola").factory("alertService", function ($timeout){
 
     var _showAlertId = function ($scope, message) {         
-        $scope.messageAlert = message;
-        console.log($scope.message);
-        var alert = document.getElementById("alertId");
+        $scope.messageAlert = message;  
+        var alert = document.getElementById("alertId");        
         alert.style.display = "block";
-        $timeout(hideAlertId($scope), 4000);        
+        $timeout(function(){hideAlertId($scope);}, 4000);        
        
 
     }
@@ -15,12 +14,11 @@ angular.module("escola").factory("alertService", function ($timeout){
         $scope.messageAlert = "";
     }
 
-    var _showAlertSuccess = function ($scope, message) {
-        
+    var _showAlertSuccess = function ($scope, message) {        
         $scope.messageSuccess = message;
         var alert = document.getElementById("alertSuccess");
         alert.style.display = "block";
-        $timeout(hideAlertSuccess($scope), 4000);        
+        $timeout(function(){hideAlertSuccess($scope);}, 4000);        
         
 
     }

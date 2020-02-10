@@ -64,6 +64,9 @@ header-fixed {
   margin-bottom: 2px;
   background: none;
 }
+.custom-select, option{ 
+  color: black;
+} 
 .custom-select, textarea{
   background: none;
   color: white;
@@ -150,7 +153,7 @@ body {
       opacity: 0;
       -webkit-transform: tr
     }
-}
+  }
 .tableFixHead          { overflow-y: auto; height: 350px; }
 .tableFixHead thead th { position: sticky; top: 0; z-index: 10; color: white; }
 
@@ -180,7 +183,6 @@ border-radius: 2px;}
   margin-bottom: 10px;
 }
 select textarea{
-  color: white;
   background: black;
 }
 select [type="text"]:disabled{
@@ -188,7 +190,6 @@ select [type="text"]:disabled{
 }
 select:active{
   background: none;
-  color: white;
 }
 select option{
   background: none;

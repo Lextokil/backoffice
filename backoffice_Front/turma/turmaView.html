@@ -32,7 +32,7 @@
 
                             <div class="input-group" ng-repeat="a in turma.alunos track by $index">
                                 <select type="text" class="custom-select" ng-model="a"
-                                    ng-change="adicionarAlunoAoArray(turma, a, $index)" ng-disabled="isEditable()"
+                                    ng-change="adicionarAlunoAoArray(turma, a, $index)" ng-disabled="true"
                                     aria-describedby="basic-addon2">
                                     <option ng-repeat="aluno in alunos" ng-value="{{aluno.id}}">{{aluno.id}}</option>
                                 </select>
@@ -41,10 +41,6 @@
                                         ng-click="deletarAluno(turma, $index)">X</button>
                                 </div>
                             </div>
-                            
-                            <button type="button" ng-click="adicionarAluno(turma)" style="margin-bottom: 3px;"
-                            class="btn btn-white" fa-trash>Add
-                            Aluno</button>
                         </div>
                     </td>
 
