@@ -3,6 +3,7 @@ projeto com intuito de estudo, simulando um pequeno sistema de escola com cadast
 
 
 **Pré-Requisitos:**
+#Markdown
 *Java 8*
 *Docker*
 *sql-server*
