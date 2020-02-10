@@ -21,5 +21,5 @@ projeto com intuito de estudo, simulando um pequeno sistema de escola com cadast
 - Exportar boletins
 
 **OBS:**
-*A fim de estudo sobre css e angularjs o design está fora dos padrões comerciais.*
+*A fim de estudo sobre css e angularjs o design do front está fora dos padrões comerciais.*
 
