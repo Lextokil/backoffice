@@ -33,6 +33,10 @@ public class AlunoDTO {
 
     private  List<Long> boletins;
 
+    public AlunoDTO( String nome, Long turma) {
+        this.nome = nome;
+        this.turma = turma;
+    }
 
 
     public static AlunoDTO of(Aluno aluno){

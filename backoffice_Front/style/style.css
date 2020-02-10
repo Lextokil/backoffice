@@ -50,8 +50,6 @@ header-fixed {
     text-align: center;
     background: none;
 }
-.inputAluno, textarea{
-}
 .input, textarea{
   background: none;
   color: white;
@@ -63,6 +61,7 @@ header-fixed {
 .input-group{
   margin-top: 3px;
   margin-bottom: 3px;
+  text-align: center;
 }
 
 .inputTurma{  
@@ -75,6 +74,7 @@ header-fixed {
 .custom-select{ 
   margin-bottom: 2px;
   background: none;
+  text-align: center;
 }
 .custom-select, option{ 
   color: black;
@@ -201,7 +201,8 @@ select option{
   background: none;
 }
 .navbar{ 
-  opacity: 0.7;
+  opacity: 0.8;
+  border-style: groove;
 }
 .nav{
   background: black;
@@ -222,10 +223,21 @@ select option{
        -o-animation: fadein 3s; /* Opera < 12.1 */
           animation: fadein 3s;
 }
+.testText{
+  margin-top: 50px;
+  text-align: center;
+  color: aliceblue;
+  font-style: italic;
+  -webkit-animation: fadein 12s; /* Safari, Chrome and Opera > 12.1 */
+     -moz-animation: fadein 12s; /* Firefox < 16 */
+      -ms-animation: fadein 12s; /* Internet Explorer */
+       -o-animation: fadein 12s; /* Opera < 12.1 */
+          animation: fadein 12s;
+}
 
 @keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from { opacity: -1; }
+  to   { opacity: 1; }  
 }
 
 /* Firefox < 16 */

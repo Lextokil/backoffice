@@ -19,10 +19,10 @@
                             ng-disabled="true" ng-value="turma.id"></td">
 
                     <td><select type="text" class="custom-select" ng-model="turma.turno"
-                        ng-change="adicionarAlunoAoArray(turma, a, $index)" ng-disabled="isEditable()"
-                        aria-describedby="basic-addon2"> 
-                        <option ng-repeat="turno in turnos" value="{{turno}}">{{turno}}</option>
-                    </select>
+                            ng-change="adicionarAlunoAoArray(turma, a, $index)" ng-disabled="isEditable()"
+                            aria-describedby="basic-addon2">
+                            <option ng-repeat="turno in turnos" value="{{turno}}">{{turno}}</option>
+                        </select>
                     <td>
                         <button type="button" ng-click="mostrarAlunos($index)" style="margin-bottom: 3px;"
                             class="btn btn-white" fa-trash>Ver
@@ -61,12 +61,12 @@
                                     <button class="btn btn-outline-danger" type="button"
                                         ng-click="removerProfessore(turma, $index)">X</button>
                                 </div>
-    
+
                             </div>
                             <button type="button" ng-click="adicionarProfessor(turma)" style="margin-bottom: 3px;"
-                            class="btn btn-white" fa-trash>Add
-                            Professor</button>
-                            
+                                class="btn btn-white" fa-trash>Add
+                                Professor</button>
+
 
                         </div>
                     </td>
